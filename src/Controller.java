@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
@@ -15,7 +14,7 @@ public class Controller {
 	public String getTheNextMove(){
 		
 		input = this.sc.nextLine();
-		while(!regex.matcher(input).find() && input != "quit") {
+		while(!regex.matcher(input).find() && !input.equals("quit")) {
 			System.out.println("Not a valid notation.");
 			input =  this.sc.nextLine();
 		}

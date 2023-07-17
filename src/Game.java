@@ -64,19 +64,19 @@ public class Game {
 	}
 	
 	public void start(Controller c) {
-		this.board.printTheBoard();
-		String input = c.getTheNextMove();
+		String input;
 		while(!isOver) {
 			this.board.printTheBoard();
+			input = c.getTheNextMove();
 			if(input.equals("quit")) {
 				isOver = true;
 			}
 			else {
+				System.out.println(this.board.toString());
 				//hamleyi isle
 				//oyun sonunu kontrol et
 				//turu degistir
 			}
-			input = c.getTheNextMove();
 		}
 	}
 }

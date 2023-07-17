@@ -26,6 +26,7 @@ public class main {
 			
 		}
 		System.out.println("Goodbye :)");
+		sc.close();
 		
 	}
 
