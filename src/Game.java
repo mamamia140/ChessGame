@@ -12,6 +12,7 @@ public class Game {
 		this.clocks = new Clock[2];
 		this.board = new Board();
 		this.isOver = false;
+		this.moveHistory = new Move[2][];
 	}
 
 	public Clock[] getClocks() {
@@ -63,11 +64,19 @@ public class Game {
 	}
 	
 	public void start(Controller c) {
+		this.board.printTheBoard();
+		String input = c.getTheNextMove();
 		while(!isOver) {
 			this.board.printTheBoard();
-			if(c.getTheNextMove().equals("quit")) {
+			if(input.equals("quit")) {
 				isOver = true;
 			}
+			else {
+				//hamleyi isle
+				//oyun sonunu kontrol et
+				//turu degistir
+			}
+			input = c.getTheNextMove();
 		}
 	}
 }
