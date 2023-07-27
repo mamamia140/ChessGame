@@ -64,19 +64,35 @@ public class Game {
 	}
 	
 	public void start(Controller c) {
+		Clock clock = new Clock();
+		clock.start();
 		String input;
+		this.board.printTheBoard();
 		while(!isOver) {
-			this.board.printTheBoard();
 			input = c.getTheNextMove();
 			if(input.equals("quit")) {
 				isOver = true;
 			}
 			else {
-				System.out.println(this.board.toString());
-				//hamleyi isle
-				//oyun sonunu kontrol et
-				//turu degistir
+				/*
+				* hamlenin geçerliliðini kontrol et
+				* if(yes){
+				*	hamleyi isle
+				*	oyun sonunu kontrol et
+				*	if(yes){
+				*		kullanýcýyý bilgilendir
+				*		isOver = true;
+				*	}
+				*	
+				*	sýrayý deðiþtir
+				*   tahtayý yazdýr --> this.board.printTheBoard();	 		
+				*}
+				* else{
+				*	kullanýcýyý uyar
+				*}
+				*/
 			}
 		}
+		clock.terminate();
 	}
 }
