@@ -14,7 +14,7 @@ public class Controller {
 	public String getTheNextMove(){
 		
 		input = this.sc.nextLine();
-		while(!regex.matcher(input).find() && !input.equals("quit")) {
+		while(!regex.matcher(input).find() && !input.equals("quit") && !input.equals("change")) {
 			System.out.println("Not a valid notation.");
 			input =  this.sc.nextLine();
 		}

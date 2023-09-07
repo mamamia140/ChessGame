@@ -1,22 +1,37 @@
+import java.time.*;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.util.TimeZone;
 
-public class Clock extends Thread{
-	
-	private volatile boolean running = true;
-	
-	
+public class Clock extends Thread {
+
+	private volatile boolean RUNNING = true;
+	private volatile Player player;
+	private volatile Instant start;
+	private volatile Instant end;
+
 	public void terminate() {
-		running = false;
+		RUNNING = false;
 	}
+
+	public void changeTurn() {
+		
+	}
+
 	@Override
 	public void run() {
-		for(int i=300; running && i>=0; i--) {
-			System.out.println(i);
+		
+		java.time.Clock clock = java.time.Clock.tickMinutes(TimeZone.getDefault().toZoneId());
+		while(RUNNING) {
+			System.out.println(LocalTime.now(clock).withNano(0).getSecond());
 			try {
 				Thread.sleep(1000);
-			}catch(InterruptedException e) {}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		//burasý deðiþcek
 	}
-	
-	
 }
+//			System.out.println("Player " + player.getSide() + " has " + player.getTimeLeft() + "seconds left.");
+

@@ -2,17 +2,22 @@
 public class Game {
 	private Clock[] clocks;
 	private int duration;
-	private Player players;
+	private static Player[] players;
 	private Board board;
 	private Move[][] moveHistory;
-	private String turn;
+	private static int turn;
 	private boolean isOver;
 	
-	public Game() {
+	public Game(int duration) {
 		this.clocks = new Clock[2];
+		this.duration = duration;
+		this.players = new Player[2];
+		this.players[0] = new Player("white",duration);
+		this.players[1] = new Player("black",duration);
 		this.board = new Board();
-		this.isOver = false;
 		this.moveHistory = new Move[2][];
+		this.turn = 0;
+		this.isOver = false;
 	}
 
 	public Clock[] getClocks() {
@@ -31,12 +36,8 @@ public class Game {
 		this.duration = duration;
 	}
 
-	public Player getPlayers() {
+	public static Player[] getPlayers() {
 		return players;
-	}
-
-	public void setPlayers(Player players) {
-		this.players = players;
 	}
 
 	public Board getBoard() {
@@ -55,14 +56,16 @@ public class Game {
 		this.moveHistory = moveHistory;
 	}
 
-	public String getTurn() {
+	public static int getTurn() {
 		return turn;
 	}
 
-	public void setTurn(String turn) {
-		this.turn = turn;
+	public static void setTurn(int newTurn) {
+		turn = newTurn;
 	}
-	
+	public static Player getCurrentPlayer() {
+		return Game.getPlayers()[Game.getTurn()];
+	}
 	public void start(Controller c) {
 		Clock clock = new Clock();
 		clock.start();
@@ -73,22 +76,26 @@ public class Game {
 			if(input.equals("quit")) {
 				isOver = true;
 			}
+			else if(input.equals("change")) {
+				clock.changeTurn();
+				turn ^= 1;
+			}
 			else {
 				/*
-				* hamlenin geçerliliğini kontrol et
+				* hamlenin geÃ§erliliÄŸini kontrol et
 				* if(yes){
 				*	hamleyi isle
 				*	oyun sonunu kontrol et
 				*	if(yes){
-				*		kullanıcıyı bilgilendir
+				*		kullanÄ±cÄ±yÄ± bilgilendir
 				*		isOver = true;
 				*	}
 				*	
-				*	sırayı değiştir
-				*   tahtayı yazdır --> this.board.printTheBoard();	 		
+				*	sÄ±rayÄ± deÄŸiÅŸtir turn ^= 1;
+				*   tahtayÄ± yazdÄ±r --> this.board.printTheBoard();	 		
 				*}
 				* else{
-				*	kullanıcıyı uyar
+				*	kullanÄ±cÄ±yÄ± uyar
 				*}
 				*/
 			}

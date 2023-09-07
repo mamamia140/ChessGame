@@ -14,7 +14,7 @@ public class main {
 			input = sc.nextInt();
 			switch(input) {
 				case 1:
-					Game game = new Game();
+					Game game = new Game(300);
 					game.start(c);
 				case 2:
 					menu = false;
