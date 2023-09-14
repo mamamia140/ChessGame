@@ -1,9 +1,12 @@
 import java.util.Scanner;
 
+import GUI.Screen;
+
 public class main {
 
 	public static void main(String[] args) {
 		Controller c = new Controller();
+		Screen screen = new Screen();
 		boolean menu = true;
 		int input;
 		Scanner sc = new Scanner(System.in);

@@ -1,13 +1,13 @@
 
 public class Square {
-	private int x;
-	private int y;
+	private int row;
+	private int column;
 	private String color;
 	private Piece piece;
 	
-	public Square(int x, int y, String color) {
-		this.x = x;
-		this.y = y;
+	public Square(int row, int column, String color) {
+		this.row = row;
+		this.column = column;
 		this.color = color;
 	}
 
@@ -27,16 +27,25 @@ public class Square {
 		this.piece = piece;
 	}
 
-	public int getX() {
-		return x;
+	public int getRow() {
+		return row;
 	}
 
-	public int getY() {
-		return y;
+	public int getColumn() {
+		return column;
 	}
 
 	public String getColor() {
 		return color;
+	}
+	
+	public boolean isEmpty() {
+		if(this.piece == null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	

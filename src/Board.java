@@ -1,49 +1,49 @@
 import java.util.Arrays;
 
 public class Board {
-	private Square[] squares;
+	private Square[][] squares;
 	private String gameRepresentation;
 	
 	public Board() {
-		this.squares = new Square[64];
+		this.squares = new Square[8][8];
 		for(int i=0; i < 8; i++) {
 			for(int j=0; j< 8; j++) {
 				if((i+j)%2 == 0) {
-					this.squares[i*8+j] = new Square(i,j,"black");
+					this.squares[i][j] = new Square(i,j,"black");
 				}
 				else {
-					this.squares[i*8+j] = new Square(i,j,"white");
+					this.squares[i][j] = new Square(i,j,"white");
 				}
 			}
 		}
 		
-		this.squares[0].setPiece(new Rook(5, this.squares[0],"white","queen"));
-		this.squares[1].setPiece(new Knight(3, this.squares[1],"white"));
-		this.squares[2].setPiece(new Bishop(3, this.squares[2],"white"));
-		this.squares[3].setPiece(new Queen(9, this.squares[3],"white"));
-		this.squares[4].setPiece(new King(0,this.squares[4],"white"));
-		this.squares[5].setPiece(new Bishop(3, this.squares[5],"white"));
-		this.squares[6].setPiece(new Knight(3, this.squares[6],"white"));
-		this.squares[7].setPiece(new Rook(5, this.squares[7],"white","king"));
+		this.squares[0][0].setPiece(new Rook(5, this.squares[0][0],Color.WHITE,"queen"));
+		this.squares[0][1].setPiece(new Knight(3, this.squares[0][1],Color.WHITE));
+		this.squares[0][2].setPiece(new Bishop(3, this.squares[0][2],Color.WHITE));
+		this.squares[0][3].setPiece(new Queen(9, this.squares[0][3],Color.WHITE));
+		this.squares[0][4].setPiece(new King(0,this.squares[0][4],Color.WHITE));
+		this.squares[0][5].setPiece(new Bishop(3, this.squares[0][5],Color.WHITE));
+		this.squares[0][6].setPiece(new Knight(3, this.squares[0][6],Color.WHITE));
+		this.squares[0][7].setPiece(new Rook(5, this.squares[0][7],Color.WHITE,"king"));
 		for(int i=0;i<8;i++) {
-			this.squares[8+i].setPiece(new Pawn(1,this.squares[8+i],"white"));
+			this.squares[1][i].setPiece(new Pawn(1,this.squares[0][i],Color.WHITE));
 		}
 		for(int i=2;i<6;i++) {
 			for(int j=0; j<8;j++ ) {
-				this.squares[i*8 + j].setPiece(null);
+				this.squares[i][j].setPiece(null);
 			}
 		}
 		for(int i=0;i<8;i++) {
-			this.squares[48+i].setPiece(new Pawn(1,this.squares[48+i],"black"));
+			this.squares[6][i].setPiece(new Pawn(1,this.squares[6][i],Color.BLACK));
 		}
-		this.squares[56].setPiece(new Rook(5, this.squares[56],"black","queen"));
-		this.squares[57].setPiece(new Knight(3, this.squares[57],"black"));
-		this.squares[58].setPiece(new Bishop(3, this.squares[58],"black"));
-		this.squares[59].setPiece(new Queen(9, this.squares[59],"black"));
-		this.squares[60].setPiece(new King(0,this.squares[60],"black"));
-		this.squares[61].setPiece(new Bishop(3, this.squares[61],"black"));
-		this.squares[62].setPiece(new Knight(3, this.squares[62],"black"));
-		this.squares[63].setPiece(new Rook(5, this.squares[63],"black","king"));
+		this.squares[7][0].setPiece(new Rook(5, this.squares[7][0],Color.BLACK,"queen"));
+		this.squares[7][1].setPiece(new Knight(3, this.squares[7][1],Color.BLACK));
+		this.squares[7][2].setPiece(new Bishop(3, this.squares[7][2],Color.BLACK));
+		this.squares[7][3].setPiece(new Queen(9, this.squares[7][3],Color.BLACK));
+		this.squares[7][4].setPiece(new King(0,this.squares[7][4],Color.BLACK));
+		this.squares[7][5].setPiece(new Bishop(3, this.squares[7][5],Color.BLACK));
+		this.squares[7][6].setPiece(new Knight(3, this.squares[7][6],Color.BLACK));
+		this.squares[7][7].setPiece(new Rook(5, this.squares[7][7],Color.BLACK,"king"));
 		this.gameRepresentation = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 	}
 
@@ -71,6 +71,29 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board \n" + Arrays.toString(squares);
+	}
+
+
+	public Square[][] getSquares() {
+		return squares;
+	}
+
+
+	public void setSquares(Square[][] squares) {
+		this.squares = squares;
+	}
+
+	public Square getSquare(int x, int y) {
+		return this.squares[x][y];
+	}
+
+	public String getGameRepresentation() {
+		return gameRepresentation;
+	}
+
+
+	public void setGameRepresentation(String gameRepresentation) {
+		this.gameRepresentation = gameRepresentation;
 	}
 	
 	

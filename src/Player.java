@@ -6,7 +6,7 @@ public class Player {
 	private Piece[] pieces;
 	private long timeLeft;
 	
-	public Player(String side, int timeLeft) {
+	public Player(String side, long timeLeft) {
 		this.side = side;
 		this.timeLeft = timeLeft;
 	}

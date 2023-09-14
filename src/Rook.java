@@ -4,10 +4,32 @@ public class Rook extends Piece{
 	private boolean isMoved;
 	private String side;
 	
-	public Rook(int points, Square square ,String color, String side) {
+	public Rook(int points, Square square ,Color color, String side) {
 		super(points, square, color);
 		this.side = side;
 		this.isMoved = false;
 	}
+	
+	@Override
 	public void move() {};
+	
+	@Override
+	public boolean isValid(Move move, Board board) {
+		if(move.getFrom().getRow() == move.getTo().getRow() || move.getFrom().getColumn() == move.getTo().getColumn()) {
+			return isPathEmpty(move.getFrom(), move.getTo(), board);
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private boolean isPathEmpty(Square from, Square to, Board board) {
+		int fromColumn = from.getColumn();
+		int fromRow = from.getRow();
+		int toColumn = to.getColumn();
+		int toRow = to.getRow();
+		int i=1;
+		
+		return true;
+	}
 }
