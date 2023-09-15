@@ -10,9 +10,15 @@ public class Bishop extends Piece{
 
 	@Override
 	public boolean isValid(Move move, Board board) {
-		if(Math.abs(move.getFrom().getColumn() - move.getTo().getColumn()) == Math.abs(move.getFrom().getRow() - move.getTo().getRow())) {
-				return isPathEmpty(move.getFrom(), move.getTo(), board);
+		if(move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+			return false;
 		}
+		else {
+			if(Math.abs(move.getFrom().getColumn() - move.getTo().getColumn()) == Math.abs(move.getFrom().getRow() - move.getTo().getRow())) {
+				return isPathEmpty(move.getFrom(), move.getTo(), board);
+			}
+		}
+		
 		return false;
 	}
 	

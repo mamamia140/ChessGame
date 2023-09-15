@@ -13,16 +13,22 @@ public class King extends Piece{
 	
 	@Override
 	public boolean isValid(Move move, Board  board) {
-		int fromColumn = move.getFrom().getColumn();
-		int fromRow = move.getFrom().getRow();
-		int toColumn = move.getTo().getColumn();
-		int toRow = move.getTo().getRow();
-		if( Math.abs(fromColumn - toColumn) <= 1 && Math.abs(fromRow - toRow) <= 1) {
-			return true;
-		}
-		else {
+		if(move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
 		}
+		else {
+			int fromColumn = move.getFrom().getColumn();
+			int fromRow = move.getFrom().getRow();
+			int toColumn = move.getTo().getColumn();
+			int toRow = move.getTo().getRow();
+			if( Math.abs(fromColumn - toColumn) <= 1 && Math.abs(fromRow - toRow) <= 1) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
 		
 	}
 	public boolean isMoved() {

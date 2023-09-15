@@ -15,12 +15,19 @@ public class Rook extends Piece{
 	
 	@Override
 	public boolean isValid(Move move, Board board) {
-		if(move.getFrom().getRow() == move.getTo().getRow() || move.getFrom().getColumn() == move.getTo().getColumn()) {
-			return isPathEmpty(move.getFrom(), move.getTo(), board);
-		}
-		else {
+		
+		if(move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
 		}
+		else {
+			if(move.getFrom().getRow() == move.getTo().getRow() || move.getFrom().getColumn() == move.getTo().getColumn()) {
+				return isPathEmpty(move.getFrom(), move.getTo(), board);
+			}
+			else {
+				return false;
+			}
+		}
+		
 	}
 	
 	private boolean isPathEmpty(Square from, Square to, Board board) {
