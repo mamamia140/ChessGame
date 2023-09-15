@@ -17,7 +17,7 @@ public class Pawn extends Piece {
 	public boolean isValid(Move move, Board board) {
 		
 		
-		if(move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if(move.getTo().getPiece() != null && move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
 		}
 		else {
