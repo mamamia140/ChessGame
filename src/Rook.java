@@ -24,11 +24,37 @@ public class Rook extends Piece{
 	}
 	
 	private boolean isPathEmpty(Square from, Square to, Board board) {
+		
 		int fromColumn = from.getColumn();
 		int fromRow = from.getRow();
 		int toColumn = to.getColumn();
 		int toRow = to.getRow();
 		int i=1;
+		
+		if(fromColumn == toColumn) {
+			if(fromRow < toRow) {
+				while(i < (toRow - fromRow) && board.getSquare(fromColumn + i, fromColumn).isEmpty()) {
+					i++;
+				}
+			}
+			else {
+				while(i < (fromRow - toRow) && board.getSquare(fromRow - i, fromColumn).isEmpty()) {
+					i++;
+				}
+			}
+		}
+		else {
+			if(fromColumn < toColumn) {
+				while(i < (toColumn - fromColumn) && board.getSquare(fromRow, fromColumn + i).isEmpty()) {
+					i++;
+				}
+			}
+			else {
+				while(i < (fromColumn - toColumn) && board.getSquare(fromRow, fromColumn - i).isEmpty()) {
+					i++;
+				}
+			}
+		}
 		
 		return true;
 	}

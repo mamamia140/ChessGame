@@ -29,7 +29,7 @@ public class Bishop extends Piece{
 				}
 			}
 			else {
-				while(i < (toColumn - fromColumn) && board.getSquare(fromColumn + i, fromRow - i).isEmpty()) {
+				while(i < (fromColumn - toColumn) && board.getSquare(fromColumn + i, fromRow - i).isEmpty()) {
 					i++;
 				}
 			}
