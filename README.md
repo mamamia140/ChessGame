@@ -1,1 +1,2 @@
-# Chess clone using Java
+# Chess Game
+Chess clone using Java
