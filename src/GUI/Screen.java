@@ -4,33 +4,40 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import src.Board;
 
 public class Screen {
 	private final JFrame gameFrame;
 	private final BoardPanel boardPanel;
+	private final Board board;
 	
-	private final java.awt.Color lightTileColor = new java.awt.Color(255,255,255);
-	private final java.awt.Color darkTileColor = new java.awt.Color(0,0,0);
+	private final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
+	private final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600); 
 	private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,400);
 	private final static Dimension TILE_PANEL_DIMENSION = new Dimension(50,50); 
 	
-	public Screen() {
+	public Screen(Board board) {
 		this.gameFrame = new JFrame("MyChessGame");
 		this.gameFrame.setLayout(new BorderLayout());
 		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
-		
+		this.board = board;
 		this.gameFrame.setVisible(true);
 		this.boardPanel = new BoardPanel();
 		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 	}
-	
 	
 	private class BoardPanel extends JPanel{
 		final List<TilePanel> boardTiles;
@@ -56,8 +63,24 @@ public class Screen {
 			super(new GridBagLayout());
 			this.tileId = tileId;
 			setPreferredSize(TILE_PANEL_DIMENSION);
+			assignTilePieceIcon(board);
 			assignTileColor();
 			validate();
+		}
+		
+		private void assignTilePieceIcon(final Board board) {
+			this.removeAll();
+			if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
+				String iconPath = "";
+				
+				try {
+					File file = new File("assets/chess_sets/cburnett/wK.svg");
+					final BufferedImage image = ImageIO.read(file);
+					add(new JLabel(new ImageIcon(image)));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		private void assignTileColor() {

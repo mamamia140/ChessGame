@@ -1,5 +1,7 @@
 package src;
 
+import src.GUI.Screen;
+
 public class Game {
 	private int duration;
 	private static Player[] players;
@@ -58,6 +60,7 @@ public class Game {
 		return Game.getPlayers()[Game.getTurn()];
 	}
 	public void start(Controller c) {
+		Screen screen = new Screen(board);
 		Clock clock = new Clock();
 		clock.start();
 		String input;

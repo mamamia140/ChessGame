@@ -8,7 +8,6 @@ public class main {
 
 	public static void main(String[] args) {
 		Controller c = new Controller();
-		Screen screen = new Screen();
 		boolean menu = true;
 		int input;
 		Scanner sc = new Scanner(System.in);
@@ -32,6 +31,7 @@ public class main {
 		}
 		System.out.println("Goodbye :)");
 		sc.close();
+		
 		
 	}
 
