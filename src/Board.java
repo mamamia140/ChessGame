@@ -132,7 +132,7 @@ public class Board {
 	}
 	
 	private Collection<Piece> getPiecesOfColor(Color color){
-		Collection pieces = new ArrayList<Piece>();
+		Collection<Piece> pieces = new ArrayList<Piece>();
 		for(int i=0; i < 8; i++) {
 			for(int j=0; j < 8; j++) {
 				if(squares[i][j].getPiece().getColor() == color){
