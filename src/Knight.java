@@ -30,4 +30,8 @@ public class Knight extends Piece{
 		}
 		
 	}
+	
+	public boolean isAttacks(Square square, Board board){
+		return isValid(new Move(this.getSquare(), square, this), board);
+	}
 }

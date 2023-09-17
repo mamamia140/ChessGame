@@ -17,6 +17,8 @@ public abstract class Piece {
 	
 	public abstract boolean isValid(Move move, Board board);
 	
+	public abstract boolean isAttacks(Square square, Board board);
+	
 	public int getPoints() {
 		return points;
 	}

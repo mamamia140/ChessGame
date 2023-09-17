@@ -1,68 +1,70 @@
 package src;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
 	private boolean isMoved;
 	private String side;
-	
-	public Rook(int points, Square square ,Color color, String side) {
+
+	public Rook(int points, Square square, Color color, String side) {
 		super(points, square, color);
 		this.side = side;
 		this.isMoved = false;
 	}
-	
+
 	@Override
-	public void move() {};
-	
+	public void move() {
+	};
+
 	@Override
 	public boolean isValid(Move move, Board board) {
-		
-		if(move.getTo().getPiece() != null && move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+
+		if (move.getTo().getPiece() != null
+				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
-		}
-		else {
-			if(move.getFrom().getRow() == move.getTo().getRow() || move.getFrom().getColumn() == move.getTo().getColumn()) {
+		} else {
+			if (move.getFrom().getRow() == move.getTo().getRow()
+					|| move.getFrom().getColumn() == move.getTo().getColumn()) {
 				return isPathEmpty(move.getFrom(), move.getTo(), board);
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
-		
+
 	}
-	
+
 	private boolean isPathEmpty(Square from, Square to, Board board) {
-		
+
 		int fromColumn = from.getColumn();
 		int fromRow = from.getRow();
 		int toColumn = to.getColumn();
 		int toRow = to.getRow();
-		int i=1;
-		
-		if(fromColumn == toColumn) {
-			if(fromRow < toRow) {
-				while(i < (toRow - fromRow) && board.getSquare(fromColumn + i, fromColumn).isEmpty()) {
+		int i = 1;
+
+		if (fromColumn == toColumn) {
+			if (fromRow < toRow) {
+				while (i < (toRow - fromRow) && board.getSquare(fromColumn + i, fromColumn).isEmpty()) {
+					i++;
+				}
+			} else {
+				while (i < (fromRow - toRow) && board.getSquare(fromRow - i, fromColumn).isEmpty()) {
 					i++;
 				}
 			}
-			else {
-				while(i < (fromRow - toRow) && board.getSquare(fromRow - i, fromColumn).isEmpty()) {
+		} else {
+			if (fromColumn < toColumn) {
+				while (i < (toColumn - fromColumn) && board.getSquare(fromRow, fromColumn + i).isEmpty()) {
+					i++;
+				}
+			} else {
+				while (i < (fromColumn - toColumn) && board.getSquare(fromRow, fromColumn - i).isEmpty()) {
 					i++;
 				}
 			}
 		}
-		else {
-			if(fromColumn < toColumn) {
-				while(i < (toColumn - fromColumn) && board.getSquare(fromRow, fromColumn + i).isEmpty()) {
-					i++;
-				}
-			}
-			else {
-				while(i < (fromColumn - toColumn) && board.getSquare(fromRow, fromColumn - i).isEmpty()) {
-					i++;
-				}
-			}
-		}
-		
+
 		return true;
+	}
+
+	public boolean isAttacks(Square square, Board board) {
+		return isValid(new Move(this.getSquare(), square, this), board);
 	}
 }

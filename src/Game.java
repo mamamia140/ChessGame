@@ -1,7 +1,6 @@
 package src;
 
 public class Game {
-	private Clock[] clocks;
 	private int duration;
 	private static Player[] players;
 	private Board board;
@@ -10,23 +9,14 @@ public class Game {
 	private boolean isOver;
 	
 	public Game(int duration) {
-		this.clocks = new Clock[2];
 		this.duration = duration;
-		this.players = new Player[2];
-		this.players[0] = new Player("white",duration);
-		this.players[1] = new Player("black",duration);
+		players = new Player[2];
+		players[0] = new Player("white",duration);
+		players[1] = new Player("black",duration);
 		this.board = new Board();
 		this.moveHistory = new Move[2][];
-		this.turn = 0;
+		turn = 0;
 		this.isOver = false;
-	}
-
-	public Clock[] getClocks() {
-		return clocks;
-	}
-
-	public void setClocks(Clock[] clocks) {
-		this.clocks = clocks;
 	}
 
 	public int getDuration() {

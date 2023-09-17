@@ -20,6 +20,7 @@ public class Pawn extends Piece {
 		if(move.getTo().getPiece() != null && move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
 		}
+		
 		else {
 			int fromColumn = move.getFrom().getColumn();
 			int fromRow = move.getFrom().getRow();
@@ -47,6 +48,10 @@ public class Pawn extends Piece {
 			return false;
 		}
 		
+	}
+	
+	public boolean isAttacks(Square square, Board board){
+		return isValid(new Move(this.getSquare(), square, this), board);
 	}
 
 	public boolean isPromoted() {

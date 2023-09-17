@@ -1,6 +1,8 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class Board {
 	private Square[][] squares;
@@ -98,5 +100,47 @@ public class Board {
 		this.gameRepresentation = gameRepresentation;
 	}
 	
+	public boolean isChecked(Color color){
+		
+		King k = getKingOfColor(color);
+		
+		Collection<Piece> opponentPieces = getPiecesOfColor(color.getOppositeColor());
+		
+		for(Piece piece: opponentPieces) {
+			if(piece.isAttacks(k.getSquare(), this)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	private King getKingOfColor(Color color) {
+		int i = 0;
+		int j = 0;
+		while(i < 8 && !(squares[i][j].getPiece().getClass() == King.class && squares[i][j].getPiece().getColor() == color)) {
+			i++;
+			if(j==8) {
+				j=0;
+			}
+		}
+		if(i==8) {
+			return null;
+		}
+		else {
+			return (King) squares[i][j].getPiece();
+		}
+	}
+	
+	private Collection<Piece> getPiecesOfColor(Color color){
+		Collection pieces = new ArrayList<Piece>();
+		for(int i=0; i < 8; i++) {
+			for(int j=0; j < 8; j++) {
+				if(squares[i][j].getPiece().getColor() == color){
+					pieces.add(squares[i][j].getPiece());
+				}
+			}
+		}
+		
+		return pieces;
+	}
 }
