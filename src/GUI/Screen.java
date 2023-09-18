@@ -75,7 +75,8 @@ public class Screen {
 				
 				try {
 					File file = new File("assets/chess_sets/cburnett/wK.svg");
-					final BufferedImage image = ImageIO.read(file);
+					final BufferedImage image = ImageIO.read(file); //ImageIO.read() fonksiyonu svg okumuyor. Okumasi 
+					//icin soyle bi cozum gordum https://stackoverflow.com/a/35812847.
 					add(new JLabel(new ImageIcon(image)));
 				}catch(Exception e) {
 					e.printStackTrace();
