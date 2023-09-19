@@ -64,9 +64,11 @@ public class Game {
 		Clock clock = new Clock();
 		clock.start();
 		String input;
+		Move newMove;
 		this.board.printTheBoard();
 		while(!isOver) {
-			input = c.getTheNextMove();
+			input = c.getCommandLineInput();
+			newMove = c.getTheNextMove();
 			if(input.equals("quit")) {
 				isOver = true;
 			}
@@ -75,25 +77,28 @@ public class Game {
 				turn ^= 1;
 			}
 			else {
-				/*
-				* hamlenin geçerliliğini kontrol et
-				* if(yes){
-				*	hamleyi isle
-				*	oyun sonunu kontrol et
-				*	if(yes){
-				*		kullanıcıyı bilgilendir
-				*		isOver = true;
-				*	}
-				*	
-				*	sırayı değiştir turn ^= 1;
-				*   tahtayı yazdır --> this.board.printTheBoard();	 		
-				*}
-				* else{
-				*	kullanıcıyı uyar
-				*}
-				*/
+				
+				Piece p = newMove.getPiece();
+				if(p.isValid(newMove, board)) {
+					/*
+					*	hamleyi isle -->  p.move(newMove);
+					*	oyun sonunu kontrol et
+					*	if(yes){
+					*		kullanıcıyı bilgilendir
+					*		isOver = true;
+					*	}
+					*	
+					*	sırayı değiştir turn ^= 1;
+					*   tahtayı yazdır --> this.board.printTheBoard();	 		
+					*/
+				}
+				else {
+					System.out.println("Invalid move");
+				}
+
 			}
 		}
 		clock.terminate();
 	}
+	
 }

@@ -13,7 +13,7 @@ public class Controller {
 		this.regex = Pattern.compile("((?:(?:O-O[-0]?)|(?:[KQNBR][a-h]?x?[a-h]x?[1-8])|(?:[a-h]x?[a-h]?[1-8]))\\+?)");
 	}
 	
-	public String getTheNextMove(){
+	public String getCommandLineInput(){
 		
 		input = this.sc.nextLine();
 		while(!regex.matcher(input).find() && !input.equals("quit") && !input.equals("change")) {
@@ -21,6 +21,11 @@ public class Controller {
 			input =  this.sc.nextLine();
 		}
 		return input;
+	}
+	
+	public Move getTheNextMove() {
+		//bussy wait the next move
+		return null;
 	}
 	
 }
