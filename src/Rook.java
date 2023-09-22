@@ -64,7 +64,4 @@ public class Rook extends Piece {
 		return true;
 	}
 
-	public boolean isAttacks(Square square, Board board) {
-		return isValid(new Move(this.getSquare(), square, this), board);
-	}
 }

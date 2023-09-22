@@ -34,10 +34,6 @@ public class King extends Piece{
 		
 	}
 	
-	public boolean isAttacks(Square square, Board board){
-		return isValid(new Move(this.getSquare(), square, this), board);
-	}
-	
 	public boolean isMoved() {
 		return isMoved;
 	}

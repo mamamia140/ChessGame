@@ -30,10 +30,6 @@ public class Queen extends Piece {
 
 	}
 
-	public boolean isAttacks(Square square, Board board) {
-		return isValid(new Move(this.getSquare(), square, this), board);
-	}
-
 	private boolean isPathEmptyDiagonal(Square from, Square to, Board board) {
 		int fromColumn = from.getColumn();
 		int fromRow = from.getRow();

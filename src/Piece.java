@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Collection;
+
 public abstract class Piece {
 	private int points;
 	private Color color;
@@ -17,7 +19,11 @@ public abstract class Piece {
 	
 	public abstract boolean isValid(Move move, Board board);
 	
-	public abstract boolean isAttacks(Square square, Board board);
+	public boolean isAttacks(Square square, Board board) {
+		return isValid(new Move(this.getSquare(), square, this), board);
+	}
+	
+	public abstract Collection<Move> getAllPossibleMoves();
 	
 	public int getPoints() {
 		return points;
