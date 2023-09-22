@@ -76,6 +76,22 @@ public class Board {
 	}
 
 
+	public void doMove(Move move) {
+		Square from = move.getFrom();
+		Square to = move.getTo();
+		
+		to.setPiece(from.getPiece());
+		from.setPiece(null);
+	}
+	
+	public void undoMove(Move move) {
+		Square from = move.getFrom();
+		Square to = move.getTo();
+		
+		from.setPiece(from.getPiece());
+		to.setPiece(to.getPiece());
+	}
+	
 	@Override
 	public String toString() {
 		return "Board \n" + Arrays.toString(squares);
@@ -135,7 +151,7 @@ public class Board {
 		}
 	}
 	
-	private Collection<Piece> getPiecesOfColor(Color color){
+	public Collection<Piece> getPiecesOfColor(Color color){
 		Collection<Piece> pieces = new ArrayList<Piece>();
 		for(int i=0; i < 8; i++) {
 			for(int j=0; j < 8; j++) {

@@ -22,7 +22,7 @@ public class Clock extends Thread {
 				player = Game.getCurrentPlayer();
 				long timeLeft= player.getTimeLeft();
 				player.setTimeLeft(--timeLeft);
-				System.out.println("Player " + player.getSide() + " has " + player.getTimeLeft() + "seconds left.");
+				System.out.println("Player " + player.getColor() + " has " + player.getTimeLeft() + "seconds left.");
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

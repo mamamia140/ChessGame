@@ -1,5 +1,8 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import src.GUI.Screen;
 
 public class Game {
@@ -13,8 +16,8 @@ public class Game {
 	public Game(int duration) {
 		this.duration = duration;
 		players = new Player[2];
-		players[0] = new Player("white",duration);
-		players[1] = new Player("black",duration);
+		players[0] = new Player(Color.WHITE,duration);
+		players[1] = new Player(Color.BLACK,duration);
 		this.board = new Board();
 		this.moveHistory = new Move[2][];
 		turn = 0;
@@ -99,6 +102,26 @@ public class Game {
 			}
 		}
 		clock.terminate();
+	}
+	
+	public boolean isCheckMate() {
+		if(board.isChecked(players[turn].getColor())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isStaleMate() {
+		Collection<Piece> pieces = board.getPiecesOfColor(players[turn].getColor());
+		ArrayList<Move> moves;
+		int i=0;
+		for(Piece piece: pieces) {
+			moves = (ArrayList<Move>) piece.getAllPossibleMoves(board);
+			i=0;
+			while(i < moves.size()) {
+				board.doMove(moves.get(i++));
+			}
+		}
 	}
 	
 }

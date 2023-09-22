@@ -2,20 +2,20 @@ package src;
 
 public class Player {
 
-	private String side;
+	private Color color;
 	private Piece[] pieces;
 	private long timeLeft;
 	
-	public Player(String side, long timeLeft) {
-		this.side = side;
+	public Player(Color color, long timeLeft) {
+		this.color = color;
 		this.timeLeft = timeLeft;
 	}
 	
-	public String getSide() {
-		return side;
+	public Color getColor() {
+		return color;
 	}
-	public void setSide(String side) {
-		this.side = side;
+	public void setColor(Color side) {
+		this.color = side;
 	}
 	public Piece[] getPieces() {
 		return pieces;
