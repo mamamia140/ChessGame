@@ -1,5 +1,6 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class Piece {
@@ -23,7 +24,20 @@ public abstract class Piece {
 		return isValid(new Move(this.getSquare(), square, this), board);
 	}
 	
-	public abstract Collection<Move> getAllPossibleMoves();
+	public Collection<Move> getAllPossibleMoves(Board board){
+		
+		Collection<Move> allPossibleMoves = new ArrayList<Move>();
+		Square[][] squares = board.getSquares();
+		for(int i=0; i<8; i++) {
+			for(int j=0; j<8; j++) {
+				Move tempMove = new Move(this.square,squares[i][j],this);
+				if(isValid(tempMove,board)) {
+					allPossibleMoves.add(tempMove);
+				}
+			}
+		}
+		return allPossibleMoves;
+	}
 	
 	public int getPoints() {
 		return points;
