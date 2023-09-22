@@ -21,6 +21,11 @@ public class Board {
 			}
 		}
 		
+		initializeTheBoard();
+		
+	}
+	
+	private void initializeTheBoard() {
 		this.squares[0][0].setPiece(new Rook(5, this.squares[0][0],Color.WHITE,"queen"));
 		this.squares[0][1].setPiece(new Knight(3, this.squares[0][1],Color.WHITE));
 		this.squares[0][2].setPiece(new Bishop(3, this.squares[0][2],Color.WHITE));
@@ -50,7 +55,6 @@ public class Board {
 		this.squares[7][7].setPiece(new Rook(5, this.squares[7][7],Color.BLACK,"king"));
 		this.gameRepresentation = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 	}
-
 	
 	public void  printTheBoard() {
 		for(int i=0 ; i < this.gameRepresentation.length(); i++) {
