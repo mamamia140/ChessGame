@@ -10,20 +10,20 @@ public class Clock extends Thread {
 	}
 
 	public void changeTurn() {
-		
+
 	}
 
 	@Override
 	public void run() {
-		
-		while(RUNNING) {
+
+		while (RUNNING) {
 			try {
 				Thread.sleep(1000);
 				player = Game.getCurrentPlayer();
-				long timeLeft= player.getTimeLeft();
+				long timeLeft = player.getTimeLeft();
 				player.setTimeLeft(--timeLeft);
 				System.out.println("Player " + player.getColor() + " has " + player.getTimeLeft() + "seconds left.");
-				
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -31,4 +31,3 @@ public class Clock extends Thread {
 		}
 	}
 }
-

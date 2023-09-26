@@ -15,17 +15,17 @@ public class Pawn extends Piece {
 
 	@Override
 	public void move() {
-		
+
 	}
 
 	@Override
 	public boolean isValid(Move move, Board board) {
-		
-		
-		if(move.getTo().getPiece() != null && move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+
+		if (move.getTo().getPiece() != null
+				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
 			return false;
 		}
-		
+
 		else {
 			int fromColumn = move.getFrom().getColumn();
 			int fromRow = move.getFrom().getRow();
@@ -48,11 +48,11 @@ public class Pawn extends Piece {
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
 					return true;
 				}
-				
+
 			}
 			return false;
 		}
-		
+
 	}
 
 	public boolean isPromoted() {

@@ -7,7 +7,7 @@ public class Square {
 	private int column;
 	private String color;
 	private Piece piece;
-	
+
 	public Square(int row, int column, String color) {
 		this.row = row;
 		this.column = column;
@@ -16,7 +16,7 @@ public class Square {
 
 	@Override
 	public String toString() {
-		if(this.piece != null) {
+		if (this.piece != null) {
 			return this.piece.toString();
 		}
 		return "Empty";
@@ -41,15 +41,13 @@ public class Square {
 	public String getColor() {
 		return color;
 	}
-	
+
 	public boolean isEmpty() {
-		if(this.piece == null) {
+		if (this.piece == null) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
-	
+
 }

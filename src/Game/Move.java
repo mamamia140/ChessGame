@@ -6,7 +6,7 @@ public class Move {
 	private Square from;
 	private Square to;
 	private Piece piece;
-	
+
 	public Move(Square from, Square to, Piece piece) {
 		this.from = from;
 		this.to = to;
@@ -36,7 +36,5 @@ public class Move {
 	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
-	
-	
-	
+
 }

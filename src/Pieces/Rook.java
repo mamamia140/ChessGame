@@ -69,4 +69,21 @@ public class Rook extends Piece {
 		return true;
 	}
 
+	public boolean isMoved() {
+		return isMoved;
+	}
+
+	public void setMoved(boolean isMoved) {
+		this.isMoved = isMoved;
+	}
+
+	public String getSide() {
+		return side;
+	}
+
+	public void setSide(String side) {
+		this.side = side;
+	}
+
+	
 }
