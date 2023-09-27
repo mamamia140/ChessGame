@@ -1,110 +1,105 @@
-package GUI;
+package src.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+public class Screen extends JFrame {
 
-import Game.Board;
+	private JPanel chessboardPanel;
+	private JButton[][] squares;
 
-public class Screen {
-	private final JFrame gameFrame;
-	private final BoardPanel boardPanel;
-	private final Board board;
+	public Screen() {
+		// Initialize the JFrame and set layout
+		setTitle("Chessboard");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
 
-	private final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
-	private final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
+		// Initialize the chessboard panel with GridLayout
+		chessboardPanel = new JPanel(new GridLayout(8, 8));
 
-	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
-	private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 400);
-	private final static Dimension TILE_PANEL_DIMENSION = new Dimension(50, 50);
+		// Calculate the size for square buttons to make them square
+		int squareSize = Math.min(
+				Toolkit.getDefaultToolkit().getScreenSize().width / 10,
+				Toolkit.getDefaultToolkit().getScreenSize().height / 10
+		);
 
-	public Screen(Board board) {
-		this.gameFrame = new JFrame("MyChessGame");
-		this.gameFrame.setLayout(new BorderLayout());
-		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
-		this.board = board;
-		this.gameFrame.setVisible(true);
-		this.boardPanel = new BoardPanel();
-		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-	}
+		// Create an 8x8 array of square buttons
+		squares = new JButton[8][8];
 
-	private class BoardPanel extends JPanel {
-		final List<TilePanel> boardTiles;
+		// Populate the chessboard with square buttons
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				squares[i][j] = new JButton();
+				squares[i][j].setPreferredSize(new Dimension(squareSize, squareSize));
 
-		BoardPanel() {
-			super(new GridLayout(8, 8));
-			this.boardTiles = new ArrayList<TilePanel>();
-
-			for (int i = 0; i < 64; i++) {
-				final TilePanel tilePanel = new TilePanel(this, i);
-				this.boardTiles.add(tilePanel);
-				add(tilePanel);
-			}
-			setPreferredSize(BOARD_PANEL_DIMENSION);
-			validate();
-		}
-	}
-
-	private class TilePanel extends JPanel {
-		private final int tileId;
-
-		TilePanel(final BoardPanel boardPanel, final int tileId) {
-			super(new GridBagLayout());
-			this.tileId = tileId;
-			setPreferredSize(TILE_PANEL_DIMENSION);
-			assignTilePieceIcon(board);
-			assignTileColor();
-			validate();
-		}
-
-		private void assignTilePieceIcon(final Board board) {
-			this.removeAll();
-			if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
-				String iconPath = "";
-				
-				try {
-					File file = new File("assets/chess_sets/cburnett/wK.svg");
-					SVGRasterizer r = new SVGRasterizer(file.toURL());
-					final BufferedImage image = r.createBufferedImage();
-					/*
-					* final BufferedImage image=ImageIO.read(file);
-					* fonksiyonu svg okumuyor. Okumasi 
-					* icin soyle bi cozum gordum https://stackoverflow.com/a/35812847.
-					*/
-					add(new JLabel(new ImageIcon(image)));
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		private void assignTileColor() {
-			int row = this.tileId / 8;
-
-			if (row == 0 || row == 2 || row == 4 || row == 6) {
-				if (this.tileId % 2 == 0) {
-					setBackground(lightTileColor);
+				// Set the background color based on the square's position
+				if ((i + j) % 2 == 0) {
+					squares[i][j].setBackground(Color.WHITE);
 				} else {
-					setBackground(darkTileColor);
+					squares[i][j].setBackground(Color.BLACK);
 				}
-			} else {
-				if (this.tileId % 2 == 0) {
-					setBackground(darkTileColor);
-				} else {
-					setBackground(lightTileColor);
-				}
+
+				// Customize the appearance and behavior of each square
+				// Add mouse listeners to handle interactions
+				chessboardPanel.add(squares[i][j]);
 			}
 		}
+		initializeBoardIcons();
+		// Add the chessboard panel to the JFrame
+		add(chessboardPanel, BorderLayout.CENTER);
+
+		// Pack and display the JFrame
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
+	private void initializeBoardIcons() {
+		// Load and resize the icons for each chess piece
+		ImageIcon whitePawnIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_pawn.png"));
+		ImageIcon blackPawnIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_pawn.png"));
+		ImageIcon whiteRookIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_rook.png"));
+		ImageIcon blackRookIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_rook.png"));
+		ImageIcon whiteKnightIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_knight.png"));
+		ImageIcon blackKnightIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_knight.png"));
+		ImageIcon whiteBishopIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_bishop.png"));
+		ImageIcon blackBishopIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_bishop.png"));
+		ImageIcon whiteQueenIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_queen.png"));
+		ImageIcon blackQueenIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_queen.png"));
+		ImageIcon whiteKingIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_king.png"));
+		ImageIcon blackKingIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_king.png"));
+
+		// Set the icons on the appropriate squares
+		squares[0][0].setIcon(blackRookIcon);
+		squares[0][1].setIcon(blackKnightIcon);
+		squares[0][2].setIcon(blackBishopIcon);
+		squares[0][3].setIcon(blackQueenIcon);
+		squares[0][4].setIcon(blackKingIcon);
+		squares[0][5].setIcon(blackBishopIcon);
+		squares[0][6].setIcon(blackKnightIcon);
+		squares[0][7].setIcon(blackRookIcon);
+
+		squares[7][0].setIcon(whiteRookIcon);
+		squares[7][1].setIcon(whiteKnightIcon);
+		squares[7][2].setIcon(whiteBishopIcon);
+		squares[7][3].setIcon(whiteQueenIcon);
+		squares[7][4].setIcon(whiteKingIcon);
+		squares[7][5].setIcon(whiteBishopIcon);
+		squares[7][6].setIcon(whiteKnightIcon);
+		squares[7][7].setIcon(whiteRookIcon);
+
+		for (int i = 0; i < 8; i++) {
+			squares[1][i].setIcon(blackPawnIcon);
+			squares[6][i].setIcon(whitePawnIcon);
+		}
+
+		// Set icons for other squares as needed
+	}
+	private ImageIcon resizeIcon(ImageIcon icon) {
+		// Resize the icon to fit the square (e.g., 80% of the square's size)
+		int iconSize = (int) (squares[0][0].getPreferredSize().width * 0.8);
+		Image image = icon.getImage();
+		Image resizedImage = image.getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
+		return new ImageIcon(resizedImage);
+	}
+
 }
