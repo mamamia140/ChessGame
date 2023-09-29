@@ -1,4 +1,4 @@
-package src.GUI;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,18 +55,18 @@ public class Screen extends JFrame {
 	}
 	private void initializeBoardIcons() {
 		// Load and resize the icons for each chess piece
-		ImageIcon whitePawnIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_pawn.png"));
-		ImageIcon blackPawnIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_pawn.png"));
-		ImageIcon whiteRookIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_rook.png"));
-		ImageIcon blackRookIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_rook.png"));
-		ImageIcon whiteKnightIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_knight.png"));
-		ImageIcon blackKnightIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_knight.png"));
-		ImageIcon whiteBishopIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_bishop.png"));
-		ImageIcon blackBishopIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_bishop.png"));
-		ImageIcon whiteQueenIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_queen.png"));
-		ImageIcon blackQueenIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_queen.png"));
-		ImageIcon whiteKingIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/white_king.png"));
-		ImageIcon blackKingIcon = resizeIcon(new ImageIcon("/home/emrah/Desktop/ChessGame/assets/chess_sets/cburnett/black_king.png"));
+		ImageIcon whitePawnIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wP.png"));
+		ImageIcon blackPawnIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bP.png"));
+		ImageIcon whiteRookIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wR.png"));
+		ImageIcon blackRookIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bR.png"));
+		ImageIcon whiteKnightIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wN.png"));
+		ImageIcon blackKnightIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bN.png"));
+		ImageIcon whiteBishopIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wB.png"));
+		ImageIcon blackBishopIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bB.png"));
+		ImageIcon whiteQueenIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wQ.png"));
+		ImageIcon blackQueenIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bQ.png"));
+		ImageIcon whiteKingIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/wK.png"));
+		ImageIcon blackKingIcon = resizeIcon(new ImageIcon("assets/chess_sets/cburnett/bK.png"));
 
 		// Set the icons on the appropriate squares
 		squares[0][0].setIcon(blackRookIcon);

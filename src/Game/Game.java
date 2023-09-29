@@ -66,7 +66,7 @@ public class Game {
 	}
 
 	public void start(Controller c) {
-		Screen screen = new Screen(board);
+		//Screen screen = new Screen(board);
 		Clock clock = new Clock();
 		clock.start();
 		String input;

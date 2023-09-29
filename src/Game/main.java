@@ -1,8 +1,8 @@
-package src;
+package Game;
 
 import java.util.Scanner;
 
-import src.GUI.Screen;
+import GUI.Screen;
 
 import javax.swing.*;
 
