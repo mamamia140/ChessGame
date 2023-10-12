@@ -65,38 +65,38 @@ public class Game {
 		return Game.getPlayers()[Game.getTurn()];
 	}
 
-	public void start(Controller c) {
+	public void start() {
 		Screen screen = new Screen(board);
-		Clock clock = new Clock();
-		clock.start();
+
 		String input;
 		Move newMove;
 		this.board.printTheBoard();
-		while (!isOver) {
-			input = c.getCommandLineInput();
-			newMove = c.getTheNextMove();
-			if (input.equals("quit")) {
-				isOver = true;
-			} else if (input.equals("change")) {
-				clock.changeTurn();
-				turn ^= 1;
-			} else {
 
-				Piece p = newMove.getPiece();
-				if (p.isValid(newMove, board)) {
-					/*
-					 * hamleyi isle --> p.move(newMove); oyun sonunu kontrol et if(yes){ kullanıcıyı
-					 * bilgilendir isOver = true; }
-					 * 
-					 * sırayı değiştir turn ^= 1; tahtayı yazdır --> this.board.printTheBoard();
-					 */
-				} else {
-					System.out.println("Invalid move");
-				}
-
-			}
-		}
-		clock.terminate();
+//		while (!isOver) {
+//			input = c.getCommandLineInput();
+//			newMove = c.getTheNextMove();
+//			if (input.equals("quit")) {
+//				isOver = true;
+//			} else if (input.equals("change")) {
+//				clock.changeTurn();
+//				turn ^= 1;
+//			} else {
+//
+//				Piece p = newMove.getPiece();
+//				if (p.isValid(newMove, board)) {
+//					/*
+//					 * hamleyi isle --> p.move(newMove); oyun sonunu kontrol et if(yes){ kullanıcıyı
+//					 * bilgilendir isOver = true; }
+//					 *
+//					 * sırayı değiştir turn ^= 1; tahtayı yazdır --> this.board.printTheBoard();
+//					 */
+//				} else {
+//					System.out.println("Invalid move");
+//				}
+//
+//			}
+//		}
+//		clock.terminate();
 	}
 
 	public boolean isCheckMate() {

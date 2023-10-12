@@ -5,18 +5,20 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Game.Board;
+import Game.Clock;
 import Game.Color;
 import Pieces.Bishop;
 import Pieces.King;
@@ -30,13 +32,14 @@ public class Screen {
 	private final JFrame gameFrame;
 	private final BoardPanel boardPanel;
 	private final Board board;
-	
+
+
 	private final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
 	private final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600); 
 	private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,400);
-	private final static Dimension TILE_PANEL_DIMENSION = new Dimension(50,50); 
+	private final static Dimension TILE_PANEL_DIMENSION = new Dimension(50,50);
 	
 	private static String SET_NAME = "cburnett";
 	
@@ -48,23 +51,43 @@ public class Screen {
 		this.gameFrame.setVisible(true);
 		this.boardPanel = new BoardPanel();
 		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
+		this.gameFrame.addWindowListener(new ScreenEventHandler());
+		this.gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 	}
+
+	private class ScreenEventHandler extends WindowAdapter{
+
+		private Clock clock;
+		public ScreenEventHandler(){
+			this.clock = new Clock();
+			clock.start();
+		}
+
+		public void windowClosing(WindowEvent event){
+			this.clock.terminate();
+		}
+	}
+
 	
 	private class BoardPanel extends JPanel{
-		final List<TilePanel> boardTiles;
+		final TilePanel[][] boardTiles;
 		
 		BoardPanel(){
 			super (new GridLayout(8,8));
-			this.boardTiles = new ArrayList<TilePanel>();
+			this.boardTiles = new TilePanel[8][8];
 			
-			for(int i=0; i < 64 ; i++) {
-				final TilePanel tilePanel = new TilePanel(this, i);
-				this.boardTiles.add(tilePanel);
-				add(tilePanel);
+			for(int i=7; i >= 0 ; i--) {
+				for(int j=0; j<8;j++){
+					this.boardTiles[i][j] = new TilePanel(this, i*8+j);
+					add(this.boardTiles[i][j]);
+				}
 			}
 			setPreferredSize(BOARD_PANEL_DIMENSION);
 			validate();
 		}
+
+
 	}
 	
 	private class TilePanel extends JPanel{
@@ -76,6 +99,35 @@ public class Screen {
 			setPreferredSize(TILE_PANEL_DIMENSION);
 			assignTilePieceIcon(board);
 			assignTileColor();
+
+			addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println(tileId);
+					assignTilePieceIcon(board);
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+
+				}
+			});
+
 			validate();
 		}
 		
@@ -156,18 +208,20 @@ public class Screen {
 			
 			if(row == 0 || row == 2 || row == 4 || row == 6) {
 				if(this.tileId % 2 == 0 ) {
-					setBackground(lightTileColor);
+					setBackground(darkTileColor);
+
 				}
 				else {
-					setBackground(darkTileColor);
+					setBackground(lightTileColor);
 				}
 			}
 			else {
 				if(this.tileId % 2 == 0 ) {
-					setBackground(darkTileColor);
+					setBackground(lightTileColor);
+
 				}
 				else {
-					setBackground(lightTileColor);
+					setBackground(darkTileColor);
 				}
 			}
 		}
