@@ -20,6 +20,8 @@ import javax.swing.*;
 import Game.Board;
 import Game.Clock;
 import Game.Color;
+import Game.Move;
+import Game.Square;
 import Pieces.Bishop;
 import Pieces.King;
 import Pieces.Knight;
@@ -72,6 +74,7 @@ public class Screen {
 	
 	private class BoardPanel extends JPanel{
 		final TilePanel[][] boardTiles;
+		private Square selectedSquare = null;
 		
 		BoardPanel(){
 			super (new GridLayout(8,8));
@@ -85,6 +88,19 @@ public class Screen {
 			}
 			setPreferredSize(BOARD_PANEL_DIMENSION);
 			validate();
+		}
+
+		public void drawBoard(Board board) {
+	        removeAll();
+	        
+	        for(int i=7; i >= 0 ; i--) {
+				for(int j=0; j<8;j++){
+					boardTiles[i][j].drawTile(board);
+	        		add(boardTiles[i][j]);
+				}
+			}
+	        validate();
+	        repaint();
 		}
 
 
@@ -103,8 +119,30 @@ public class Screen {
 			addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println(tileId);
-					assignTilePieceIcon(board);
+					if(boardPanel.selectedSquare == null) {
+						if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
+							boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
+						}
+						
+					}
+					else {
+						if(board.getSquare(tileId/8, tileId%8) == boardPanel.selectedSquare) {
+							boardPanel.selectedSquare = null;
+						}
+						else {
+							Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
+							if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
+								board.doMove(temp);
+								boardPanel.selectedSquare = null;
+							}
+							else {
+								
+							}
+							
+						}
+					}
+					
+					boardPanel.drawBoard(board);
 				}
 
 				@Override
@@ -127,9 +165,16 @@ public class Screen {
 
 				}
 			});
-
+			
 			validate();
 		}
+		
+		void drawTile(Board board) {
+            assignTileColor();
+            assignTilePieceIcon(board);
+            validate();
+            repaint();
+        }
 		
 		private void assignTilePieceIcon(final Board board) {
 			this.removeAll();

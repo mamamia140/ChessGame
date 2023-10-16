@@ -62,7 +62,7 @@ public class Queen extends Piece {
 				}
 			}
 		}
-		if (i == (toColumn - fromColumn) && i == (fromColumn - toColumn)) {
+		if (i == (toColumn - fromColumn) || i == (fromColumn - toColumn)) {
 			return true;
 		} else {
 			return false;
