@@ -36,7 +36,7 @@ public class Board {
 		this.squares[0][6].setPiece(new Knight(3, this.squares[0][6], Color.WHITE));
 		this.squares[0][7].setPiece(new Rook(5, this.squares[0][7], Color.WHITE, "king"));
 		for (int i = 0; i < 8; i++) {
-			this.squares[1][i].setPiece(new Pawn(1, this.squares[0][i], Color.WHITE));
+			this.squares[1][i].setPiece(new Pawn(1, this.squares[1][i], Color.WHITE));
 		}
 		for (int i = 2; i < 6; i++) {
 			for (int j = 0; j < 8; j++) {

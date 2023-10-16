@@ -35,7 +35,7 @@ public class Pawn extends Piece {
 				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty()) {
 					return true;
 				}
-				if ((fromRow - toRow == 1) && (fromColumn == toColumn
+				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
 					return true;
 				}
@@ -44,7 +44,7 @@ public class Pawn extends Piece {
 					return true;
 				}
 
-				if ((toRow - fromRow == 1) && (fromColumn == toColumn
+				if ((toRow - fromRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
 					return true;
 				}
