@@ -17,11 +17,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import Game.Board;
-import Game.Clock;
-import Game.Color;
-import Game.Move;
-import Game.Square;
+import Game.*;
 import Pieces.Bishop;
 import Pieces.King;
 import Pieces.Knight;
@@ -35,6 +31,7 @@ public class Screen {
 	private final BoardPanel boardPanel;
 	private final Board board;
 
+	private final Game game;
 
 	private final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
 	private final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
@@ -47,11 +44,12 @@ public class Screen {
 	
 	private static String SET_NAME = "cburnett";
 	
-	public Screen(Board board) {
+	public Screen(Game game) {
+		this.game = game;
 		this.gameFrame = new JFrame("MyChessGame");
 		this.gameFrame.setLayout(new BorderLayout());
 		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
-		this.board = board;
+		this.board = game.getBoard();
 		this.gameFrame.setVisible(true);
 		this.boardPanel = new BoardPanel();
 		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
@@ -118,6 +116,17 @@ public class Screen {
 			repaint();
 		}
 
+		public void changeTheTurn(){
+
+		}
+
+		public void borderHighlight(int tileId){
+			boardTiles[tileId/8][tileId%8].setBorder(BorderFactory.createLineBorder(highlightColor));
+		}
+
+		public void borderUnhighlight(){
+			boardTiles[selectedSquare.getRow()][selectedSquare.getColumn()].setBorder(null);
+		}
 
 	}
 	
@@ -138,28 +147,33 @@ public class Screen {
 						if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
 							boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
 							boardPanel.highlightTheBoard(boardPanel.selectedSquare.getPiece(), board);
+							boardPanel.borderHighlight(tileId);
 						}
-						
+
 					}
 					else {
-						if(board.getSquare(tileId/8, tileId%8) == boardPanel.selectedSquare) {
-							boardPanel.selectedSquare = null;
-							boardPanel.drawBoard(board);
-						}
-						else {
-							Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
-							if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
-								board.doMove(temp);
-								boardPanel.selectedSquare = null;
-								boardPanel.drawBoard(board);
-							}
-							else {
-								
-							}
-							
-						}
-					}
+						Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
+						if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
+							board.doMove(temp);
+							Game.setTurn(Game.getTurn() ^ 1);
 
+							if(board.isChecked(Color.BLACK) ){
+								System.out.println("check");
+							}
+							if(board.isCheckMate(Game.getPlayers(), Game.getTurn())){
+								System.out.println("checkMate");
+							}
+							if(board.isStaleMate(Game.getPlayers(),Game.getTurn())){
+								System.out.println("staleMate");
+							}
+
+						}
+
+						boardPanel.drawBoard(board);
+						boardPanel.borderUnhighlight();
+						boardPanel.selectedSquare = null;
+						//setBorder(BorderFactory.createEmptyBorder());
+					}
 				}
 
 				@Override

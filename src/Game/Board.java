@@ -1,8 +1,11 @@
 package Game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Scanner;
 
 import Pieces.*;
 
@@ -10,6 +13,7 @@ public class Board {
 	private Square[][] squares;
 	private String gameRepresentation;
 
+	private Piece lastTakenPiece = null;
 	public Board() {
 		this.squares = new Square[8][8];
 		for (int i = 0; i < 8; i++) {
@@ -74,9 +78,24 @@ public class Board {
 		System.out.println();
 	}
 
+	public void importGamesFromFEN(String filePath){
+		try {
+			File f1 = new File(filePath);
+			Scanner dataReader = new Scanner(f1);
+			while (dataReader.hasNextLine()) {
+				String fileData = dataReader.nextLine();
+				System.out.println(fileData);
+			}
+			dataReader.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void doMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
+		this.lastTakenPiece = to.getPiece();
 		move.getPiece().setSquare(to);
 
 		to.setPiece(from.getPiece());
@@ -87,8 +106,8 @@ public class Board {
 		Square from = move.getFrom();
 		Square to = move.getTo();
 		move.getPiece().setSquare(from);
-		from.setPiece(from.getPiece());
-		to.setPiece(to.getPiece());
+		from.setPiece(move.getPiece());
+		to.setPiece(lastTakenPiece);
 	}
 
 	@Override
@@ -133,12 +152,21 @@ public class Board {
 	private King getKingOfColor(Color color) {
 		int i = 0;
 		int j = 0;
-		while (i < 8 && !(squares[i][j].getPiece().getClass() == King.class
-				&& squares[i][j].getPiece().getColor() == color)) {
-			i++;
-			if (j == 8) {
-				j = 0;
+
+		while( i < 8 ){
+			j=0;
+			while( j < 8){
+				if(squares[i][j].getPiece() != null){
+					if(squares[i][j].getPiece().getClass() == King.class && squares[i][j].getPiece().getColor() == color ){
+						break;
+					}
+				}
+				j++;
 			}
+			if(j != 8){
+				break;
+			}
+			i++;
 		}
 		if (i == 8) {
 			return null;
@@ -211,12 +239,45 @@ public class Board {
 		Collection<Piece> pieces = new ArrayList<Piece>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (squares[i][j].getPiece().getColor() == color) {
-					pieces.add(squares[i][j].getPiece());
+				if(squares[i][j].getPiece() != null){
+					if (squares[i][j].getPiece().getColor() == color) {
+						pieces.add(squares[i][j].getPiece());
+					}
 				}
+
 			}
 		}
 
 		return pieces;
+	}
+
+	public boolean isCheckMate(Player[] players,int turn ) {
+		if (isChecked(players[turn].getColor())) {
+			return isStaleMate(players, turn);
+		}
+		return false;
+	}
+
+	public boolean isStaleMate(Player[] players, int turn) {
+		Collection<Piece> pieces = getPiecesOfColor(players[turn].getColor());
+		ArrayList<Move> moves;
+		int i = 0;
+		for (Piece piece : pieces) {
+			moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
+			i = 0;
+			while (i < moves.size()) {
+				doMove(moves.get(i));
+				if (!isChecked(players[turn].getColor())) {
+					undoMove(moves.get(i++));
+					break;
+				} else {
+					undoMove(moves.get(i++));
+				}
+			}
+			if (i != moves.size()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

@@ -66,67 +66,14 @@ public class Game {
 	}
 
 	public void start() {
-		Screen screen = new Screen(board);
 
-		String input;
-		Move newMove;
-		this.board.printTheBoard();
-
-//		while (!isOver) {
-//			input = c.getCommandLineInput();
-//			newMove = c.getTheNextMove();
-//			if (input.equals("quit")) {
-//				isOver = true;
-//			} else if (input.equals("change")) {
-//				clock.changeTurn();
-//				turn ^= 1;
-//			} else {
-//
-//				Piece p = newMove.getPiece();
-//				if (p.isValid(newMove, board)) {
-//					/*
-//					 * hamleyi isle --> p.move(newMove); oyun sonunu kontrol et if(yes){ kullanıcıyı
-//					 * bilgilendir isOver = true; }
-//					 *
-//					 * sırayı değiştir turn ^= 1; tahtayı yazdır --> this.board.printTheBoard();
-//					 */
-//				} else {
-//					System.out.println("Invalid move");
-//				}
-//
-//			}
-//		}
-//		clock.terminate();
 	}
 
 	public boolean isCheckMate() {
-		if (board.isChecked(players[turn].getColor())) {
-			return isStaleMate();
-		}
-		return false;
+		return board.isCheckMate(players,turn);
 	}
 
 	public boolean isStaleMate() {
-		Collection<Piece> pieces = board.getPiecesOfColor(players[turn].getColor());
-		ArrayList<Move> moves;
-		int i = 0;
-		for (Piece piece : pieces) {
-			moves = (ArrayList<Move>) piece.getAllPossibleMoves(board);
-			i = 0;
-			while (i < moves.size()) {
-				board.doMove(moves.get(i));
-				if (!board.isChecked(players[turn].getColor())) {
-					board.undoMove(moves.get(i++));
-					break;
-				} else {
-					board.undoMove(moves.get(i++));
-				}
-			}
-			if (i != moves.size()) {
-				return false;
-			}
-		}
-		return true;
+		return board.isStaleMate(players, turn);
 	}
-
 }
