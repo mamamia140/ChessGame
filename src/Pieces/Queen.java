@@ -43,21 +43,21 @@ public class Queen extends Piece {
 		int i = 1;
 		if (fromColumn < toColumn) {
 			if (fromRow < toRow) {
-				while (i < (toColumn - fromColumn) && board.getSquare(fromColumn + i, fromRow + i).isEmpty()) {
+				while (i < (toColumn - fromColumn) && board.getSquare(fromRow + i, fromColumn + i).isEmpty()) {
 					i++;
 				}
 			} else {
-				while (i < (fromColumn - toColumn) && board.getSquare(fromColumn + i, fromRow - i).isEmpty()) {
+				while (i < (toColumn - fromColumn) && board.getSquare(fromRow - i, fromColumn + i).isEmpty()) {
 					i++;
 				}
 			}
 		} else {
 			if (fromRow < toRow) {
-				while (i < (fromColumn - toColumn) && board.getSquare(fromColumn - i, fromRow + i).isEmpty()) {
+				while (i < (fromColumn - toColumn) && board.getSquare(fromRow + i, fromColumn - i).isEmpty()) {
 					i++;
 				}
 			} else {
-				while (i < (toColumn - fromColumn) && board.getSquare(fromColumn - i, fromRow - i).isEmpty()) {
+				while (i < (fromColumn - toColumn) && board.getSquare(fromRow - i, fromColumn - i).isEmpty()) {
 					i++;
 				}
 			}
@@ -79,7 +79,7 @@ public class Queen extends Piece {
 
 		if (fromColumn == toColumn) {
 			if (fromRow < toRow) {
-				while (i < (toRow - fromRow) && board.getSquare(fromColumn + i, fromColumn).isEmpty()) {
+				while (i < (toRow - fromRow) && board.getSquare(fromRow + i, fromColumn).isEmpty()) {
 					i++;
 				}
 			} else {
@@ -99,6 +99,10 @@ public class Queen extends Piece {
 			}
 		}
 
-		return true;
+		if (i == Math.abs(fromColumn - toColumn) || i == Math.abs(fromRow - toRow)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -38,21 +38,21 @@ public class Bishop extends Piece {
 		int i = 1;
 		if (fromColumn < toColumn) {
 			if (fromRow < toRow) {
-				while (i < (toColumn - fromColumn) && board.getSquare(fromColumn + i, fromRow + i).isEmpty()) {
+				while (i < (toColumn - fromColumn) && board.getSquare(fromRow + i, fromColumn + i).isEmpty()) {
 					i++;
 				}
 			} else {
-				while (i < (fromColumn - toColumn) && board.getSquare(fromColumn + i, fromRow - i).isEmpty()) {
+				while (i < (toColumn - fromColumn) && board.getSquare(fromRow - i, fromColumn + i).isEmpty()) {
 					i++;
 				}
 			}
 		} else {
 			if (fromRow < toRow) {
-				while (i < (fromColumn - toColumn) && board.getSquare(fromColumn - i, fromRow + i).isEmpty()) {
+				while (i < (fromColumn - toColumn) && board.getSquare(fromRow + i, fromColumn - i).isEmpty()) {
 					i++;
 				}
 			} else {
-				while (i < (toColumn - fromColumn) && board.getSquare(fromColumn - i, fromRow - i).isEmpty()) {
+				while (i < (fromColumn - toColumn) && board.getSquare(fromRow - i, fromColumn - i).isEmpty()) {
 					i++;
 				}
 			}

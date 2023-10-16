@@ -38,6 +38,8 @@ public class Screen {
 
 	private final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
 	private final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
+
+	private final java.awt.Color highlightColor = java.awt.Color.decode("#a1eb34");
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600); 
 	private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,400);
@@ -103,6 +105,19 @@ public class Screen {
 	        repaint();
 		}
 
+		public void highlightTheBoard(Piece piece, Board board){
+
+			for(int i=7; i >= 0 ; i--) {
+				for(int j=0; j<8;j++){
+					if(piece.isValid(new Move(piece.getSquare(),board.getSquare(i,j),piece),board)){
+						boardTiles[i][j].highlight(board);
+					}
+				}
+			}
+			validate();
+			repaint();
+		}
+
 
 	}
 	
@@ -122,18 +137,21 @@ public class Screen {
 					if(boardPanel.selectedSquare == null) {
 						if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
 							boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
+							boardPanel.highlightTheBoard(boardPanel.selectedSquare.getPiece(), board);
 						}
 						
 					}
 					else {
 						if(board.getSquare(tileId/8, tileId%8) == boardPanel.selectedSquare) {
 							boardPanel.selectedSquare = null;
+							boardPanel.drawBoard(board);
 						}
 						else {
 							Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
 							if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
 								board.doMove(temp);
 								boardPanel.selectedSquare = null;
+								boardPanel.drawBoard(board);
 							}
 							else {
 								
@@ -141,8 +159,7 @@ public class Screen {
 							
 						}
 					}
-					
-					boardPanel.drawBoard(board);
+
 				}
 
 				@Override
@@ -277,6 +294,13 @@ public class Screen {
 			Image image = icon.getImage();
 			Image resizedImage = image.getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
 			return new ImageIcon(resizedImage);
+		}
+
+		public void highlight(Board board) {
+			setBackground(highlightColor);
+			assignTilePieceIcon(board);
+			validate();
+			repaint();
 		}
 	}
 }

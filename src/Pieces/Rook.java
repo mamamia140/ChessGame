@@ -46,7 +46,7 @@ public class Rook extends Piece {
 
 		if (fromColumn == toColumn) {
 			if (fromRow < toRow) {
-				while (i < (toRow - fromRow) && board.getSquare(fromColumn + i, fromColumn).isEmpty()) {
+				while (i < (toRow - fromRow) && board.getSquare(fromRow + i, fromColumn).isEmpty()) {
 					i++;
 				}
 			} else {
@@ -66,7 +66,11 @@ public class Rook extends Piece {
 			}
 		}
 
-		return true;
+		if (i == Math.abs(fromColumn - toColumn) || i == Math.abs(fromRow - toRow)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean isMoved() {

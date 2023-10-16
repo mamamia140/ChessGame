@@ -77,6 +77,7 @@ public class Board {
 	public void doMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
+		move.getPiece().setSquare(to);
 
 		to.setPiece(from.getPiece());
 		from.setPiece(null);
@@ -85,7 +86,7 @@ public class Board {
 	public void undoMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
-
+		move.getPiece().setSquare(from);
 		from.setPiece(from.getPiece());
 		to.setPiece(to.getPiece());
 	}
