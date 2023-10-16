@@ -84,7 +84,10 @@ public class Board {
 			Scanner dataReader = new Scanner(f1);
 			while (dataReader.hasNextLine()) {
 				String fileData = dataReader.nextLine();
-				System.out.println(fileData);
+				for(String s : fileData.split(" ")[0].split("/")) {
+					System.out.println(s);
+				}
+				
 			}
 			dataReader.close();
 		} catch (FileNotFoundException e) {
