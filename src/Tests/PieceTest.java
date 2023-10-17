@@ -16,9 +16,9 @@ public class PieceTest {
     @Test
     void test() {
         Piece p = board.getSquare(0,2).getPiece();
-        move = new Move(board.getSquare(1,3),board.getSquare(1,5),board.getSquare(1,3).getPiece());
+        move = new Move(board.getSquare(1,3),board.getSquare(1,5));
         board.doMove(move);
-        move = new Move(board.getSquare(0,2), board.getSquare(1,3),p);
+        move = new Move(board.getSquare(0,2), board.getSquare(1,3));
         assertEquals(true,p.isValid(move,board));
     }
 }

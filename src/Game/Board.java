@@ -26,39 +26,7 @@ public class Board {
 			}
 		}
 
-		initializeTheBoard();
-		//importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
-	}
-
-	private void initializeTheBoard() {
-		this.squares[0][0].setPiece(new Rook(Color.WHITE));
-		this.squares[0][1].setPiece(new Knight( Color.WHITE));
-		this.squares[0][2].setPiece(new Bishop(Color.WHITE));
-		this.squares[0][3].setPiece(new Queen(Color.WHITE));
-		this.squares[0][4].setPiece(new King(Color.WHITE));
-		this.squares[0][5].setPiece(new Bishop(Color.WHITE));
-		this.squares[0][6].setPiece(new Knight(Color.WHITE));
-		this.squares[0][7].setPiece(new Rook(Color.WHITE));
-		for (int i = 0; i < 8; i++) {
-			this.squares[1][i].setPiece(new Pawn(Color.WHITE));
-		}
-		for (int i = 2; i < 6; i++) {
-			for (int j = 0; j < 8; j++) {
-				this.squares[i][j].setPiece(null);
-			}
-		}
-		for (int i = 0; i < 8; i++) {
-			this.squares[6][i].setPiece(new Pawn( Color.BLACK));
-		}
-		this.squares[7][0].setPiece(new Rook(Color.BLACK));
-		this.squares[7][1].setPiece(new Knight(Color.BLACK));
-		this.squares[7][2].setPiece(new Bishop( Color.BLACK));
-		this.squares[7][3].setPiece(new Queen(Color.BLACK));
-		this.squares[7][4].setPiece(new King(Color.BLACK));
-		this.squares[7][5].setPiece(new Bishop(Color.BLACK));
-		this.squares[7][6].setPiece(new Knight(Color.BLACK));
-		this.squares[7][7].setPiece(new Rook(Color.BLACK));
-		this.gameRepresentation = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	public void printTheBoard() {
@@ -86,7 +54,9 @@ public class Board {
 			while (dataReader.hasNextLine()) {
 				String fenString = dataReader.nextLine();
 				this.gameRepresentation = fenString;
-				placePiecesOnTheBoard(fenString);
+				String[] FENFields = parseFENString(fenString);
+				parsePiecePlacementField(FENFields[0]);
+				Game.setTurn(FENFields[1].charAt(0) == 'w' ? 0 : 1);
 			}
 			dataReader.close();
 		} catch (FileNotFoundException e) {
@@ -94,9 +64,13 @@ public class Board {
 		}
 	}
 
-	private void placePiecesOnTheBoard(String fenString){
+	private String[] parseFENString(String fenString){
+		return fenString.split(" ");
+	}
+
+	private void parsePiecePlacementField(String piecePlacementString){
 		int i=7,j=0;
-		String[] ranks = fenString.split(" ")[0].split("/");
+		String[] ranks = piecePlacementString.split("/");
 		for(String rank : ranks) {
 			j=0;
 			for(char c: rank.toCharArray()){
@@ -141,16 +115,69 @@ public class Board {
 	public void doMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
-		this.lastTakenPiece = to.getPiece();
-		to.setPiece(from.getPiece());
-		from.setPiece(null);
+
+		if(move.getFromPiece().getClass() == King.class || move.getDestinationPiece().getClass() == King.class){
+			((King) move.getFromPiece()).setMoved(true);
+		}
+		if(move.getFromPiece().getClass() == Rook.class || move.getDestinationPiece().getClass() == Rook.class){
+			((Rook) move.getFromPiece()).setMoved(true);
+		}
+
+		if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class ){
+
+			if(from.getColumn() < to.getColumn()){
+				getSquare(from.getRow(),from.getColumn() + 2).setPiece(from.getPiece());
+				getSquare(from.getRow(),from.getColumn() + 1).setPiece(to.getPiece());
+				from.setPiece(null);
+				to.setPiece(null);
+			}
+			else{
+				getSquare(from.getRow(),from.getColumn() - 2).setPiece(from.getPiece());
+				getSquare(from.getRow(),from.getColumn() - 1).setPiece(to.getPiece());
+				from.setPiece(null);
+				to.setPiece(null);
+			}
+		}
+		else{
+			this.lastTakenPiece = to.getPiece();
+			to.setPiece(from.getPiece());
+			from.setPiece(null);
+		}
+
 	}
 
 	public void undoMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
-		from.setPiece(move.getPiece());
-		to.setPiece(lastTakenPiece);
+
+		if(move.getFromPiece().getClass() == King.class || move.getDestinationPiece().getClass() == King.class){
+			((King) move.getFromPiece()).setMoved(false);
+		}
+		if(move.getFromPiece().getClass() == Rook.class || move.getDestinationPiece().getClass() == Rook.class){
+			((Rook) move.getFromPiece()).setMoved(true);
+		}
+
+		if(move.getFromPiece().getClass() == King.class && move.getDestinationPiece() != null && move.getFromPiece().getColor() == move.getDestinationPiece().getColor() && move.getDestinationPiece().getClass() == Rook.class ){
+			if(from.getColumn() < to.getColumn()){
+
+				from.setPiece(move.getFromPiece());
+				getSquare(from.getRow(),from.getColumn() + 2).setPiece(null);
+				to.setPiece(move.getDestinationPiece());
+				getSquare(from.getRow(),from.getColumn() + 1).setPiece(null);
+
+			}
+			else{
+				from.setPiece(move.getFromPiece());
+				getSquare(from.getRow(),from.getColumn() - 2).setPiece(null);
+				to.setPiece(move.getDestinationPiece());
+				getSquare(from.getRow(),from.getColumn() - 1).setPiece(null);
+			}
+		}
+		else{
+			from.setPiece(move.getFromPiece());
+			to.setPiece(lastTakenPiece);
+		}
+
 	}
 
 	@Override
@@ -226,55 +253,63 @@ public class Board {
 		int destinationRow = destination.getRow();
 		int destinationColumn = destination.getColumn();
 
-		if(fromRow < destinationRow) {
-			if(fromColumn < destinationColumn) {
-				for(int i=1; i < destinationRow - fromRow; i++) {
-					squareList.add(squares[fromRow+i][fromColumn+i]);
+		if(Math.abs(fromRow - destinationRow) == Math.abs(fromColumn - destinationColumn)){
+			if(fromRow < destinationRow) {
+				if(fromColumn < destinationColumn ) {
+					for(int i=1; i < destinationRow - fromRow; i++) {
+						squareList.add(squares[fromRow+i][fromColumn+i]);
+					}
+				}
+
+				else {
+					for(int i=1; i < destinationRow - fromRow; i++) {
+						squareList.add(squares[fromRow+i][fromColumn-i]);
+					}
 				}
 			}
-			else if(fromColumn == destinationColumn) {
-				for(int i=1; i < destinationRow - fromRow; i++) {
-					squareList.add(squares[fromRow+i][fromColumn]);
-				}
-			}
+
 			else {
-				for(int i=1; i < destinationRow - fromRow; i++) {
-					squareList.add(squares[fromRow+i][fromColumn-i]);
+				if(fromColumn < destinationColumn) {
+					for(int i=1; i < fromRow - destinationRow; i++) {
+						squareList.add(squares[fromRow-i][fromColumn+i]);
+					}
+				}
+
+				else {
+					for(int i=1; i < fromRow - destinationRow; i++) {
+						squareList.add(squares[fromRow-i][fromColumn-i]);
+					}
 				}
 			}
 		}
-		else if(fromRow == destinationRow) {
-			if(fromColumn < destinationColumn) {
-				for(int i=1; i < destinationColumn - fromColumn; i++) {
-					squareList.add(squares[fromRow][fromColumn+i]);
+		else if(fromRow == destinationRow || fromColumn == destinationColumn){
+			if(fromColumn == destinationColumn) {
+				if(fromRow < destinationRow){
+					for(int i=1; i < destinationRow - fromRow; i++) {
+						squareList.add(squares[fromRow+i][fromColumn]);
+					}
 				}
+				else{
+					for(int i=1; i < fromRow - destinationRow; i++) {
+						squareList.add(squares[fromRow-i][fromColumn]);
+					}
+				}
+
 			}
-			else if(fromColumn == destinationColumn) {
-				return squareList;
-			}
-			else {
-				for(int i=1; i < fromColumn - destinationColumn; i++) {
-					squareList.add(squares[fromRow][fromColumn-i]);
+			else{
+				if(fromColumn < destinationColumn) {
+					for(int i=1; i < destinationColumn - fromColumn; i++) {
+						squareList.add(squares[fromRow][fromColumn+i]);
+					}
+				}
+				else {
+					for(int i=1; i < fromColumn - destinationColumn; i++) {
+						squareList.add(squares[fromRow][fromColumn-i]);
+					}
 				}
 			}
 		}
-		else {
-			if(fromColumn < destinationColumn) {
-				for(int i=1; i < fromRow - destinationRow; i++) {
-					squareList.add(squares[fromRow-i][fromColumn+i]);
-				}			
-			}
-			else if(fromColumn == destinationColumn) {
-				for(int i=1; i < fromRow - destinationRow; i++) {
-					squareList.add(squares[fromRow-i][fromColumn]);
-				}
-			}
-			else {
-				for(int i=1; i < fromRow - destinationRow; i++) {
-					squareList.add(squares[fromRow-i][fromColumn-i]);
-				}			
-			}
-		}
+
 		return squareList;
 	}
 

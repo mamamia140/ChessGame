@@ -5,36 +5,32 @@ import Pieces.*;
 public class Move {
 	private Square from;
 	private Square to;
-	private Piece piece;
+	private Piece fromPiece;
 
-	public Move(Square from, Square to, Piece piece) {
+	private Piece destinationPiece;
+
+	public Move(Square from, Square to) {
 		this.from = from;
 		this.to = to;
-		this.piece = piece;
+		this.fromPiece = from.getPiece();
+		this.destinationPiece = to.getPiece();
 	}
 
 	public Square getFrom() {
 		return from;
 	}
 
-	public void setFrom(Square from) {
-		this.from = from;
-	}
 
 	public Square getTo() {
 		return to;
 	}
 
-	public void setTo(Square to) {
-		this.to = to;
+
+	public Piece getFromPiece() {
+		return fromPiece;
 	}
 
-	public Piece getPiece() {
-		return piece;
+	public Piece getDestinationPiece() {
+		return destinationPiece;
 	}
-
-	public void setPiece(Piece piece) {
-		this.piece = piece;
-	}
-
 }

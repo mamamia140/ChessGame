@@ -23,7 +23,7 @@ public abstract class Piece {
 	public abstract boolean isValid(Move move, Board board);
 
 	public boolean isAttacks(Square square, Board board) {
-		return isValid(new Move(this.getSquare(), square, this), board);
+		return isValid(new Move(this.getSquare(), square), board);
 	}
 
 	public Collection<Move> getAllPossibleMoves(Board board) {
@@ -32,7 +32,7 @@ public abstract class Piece {
 		Square[][] squares = board.getSquares();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Move tempMove = new Move(this.square, squares[i][j], this);
+				Move tempMove = new Move(this.square, squares[i][j]);
 				if (isValid(tempMove, board)) {
 					allPossibleMoves.add(tempMove);
 				}

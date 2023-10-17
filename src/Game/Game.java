@@ -6,7 +6,7 @@ public class Game {
 	private Player[] players;
 	private Board board;
 	private Move[][] moveHistory;
-	private int turn = 0;
+	private static int turn = 0;
 	private boolean isOver = false;
 
 	public Game(int duration) {
@@ -46,12 +46,12 @@ public class Game {
 		this.moveHistory = moveHistory;
 	}
 
-	public int getTurn() {
-		return this.turn;
+	public static int getTurn() {
+		return Game.turn;
 	}
 
-	public void setTurn(int turn) {
-		this.turn = turn;
+	public static void setTurn(int turn) {
+		Game.turn = turn;
 	}
 
 	public Player getCurrentPlayer() {

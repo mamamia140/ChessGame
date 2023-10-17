@@ -107,7 +107,7 @@ public class Screen {
 
 			for(int i=7; i >= 0 ; i--) {
 				for(int j=0; j<8;j++){
-					if(piece.isValid(new Move(piece.getSquare(),board.getSquare(i,j),piece),board)){
+					if(piece.isValid(new Move(piece.getSquare(),board.getSquare(i,j)),board)){
 						boardTiles[i][j].highlight(board);
 					}
 				}
@@ -155,7 +155,7 @@ public class Screen {
 
 					}
 					else {
-						Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
+						Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8));
 						if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
 							board.doMove(temp);
 							game.setTurn(game.getTurn() ^ 1);
