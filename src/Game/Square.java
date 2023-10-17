@@ -27,7 +27,10 @@ public class Square {
 	}
 
 	public void setPiece(Piece piece) {
+
 		this.piece = piece;
+		piece.setSquare(this);
+		
 	}
 
 	public int getRow() {
