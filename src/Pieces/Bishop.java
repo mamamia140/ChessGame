@@ -7,8 +7,9 @@ import Game.Square;
 
 public class Bishop extends Piece {
 
-	public Bishop(int points, Square square, Color color) {
-		super(points, square, color);
+	public Bishop(Color color) {
+		super(color);
+		this.setPoints(3);
 	}
 
 	@Override

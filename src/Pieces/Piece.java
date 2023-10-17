@@ -11,14 +11,11 @@ import Game.Square;
 public abstract class Piece {
 	private int points;
 	private Color color;
-	private boolean isTaken;
+	private boolean isTaken = false;
 	private Square square;
 
-	public Piece(int points, Square square, Color color) {
-		this.points = points;
-		this.square = square;
+	public Piece(Color color) {
 		this.color = color;
-		this.isTaken = false;
 	}
 
 	public abstract void move();

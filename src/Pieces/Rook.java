@@ -6,11 +6,12 @@ import Game.Move;
 import Game.Square;
 
 public class Rook extends Piece {
-	private boolean isMoved;
+	private boolean isMoved = false;
+	private String side;
 
-	public Rook(int points, Square square, Color color) {
-		super(points, square, color);
-		this.isMoved = false;
+	public Rook( Color color) {
+		super(color);
+		this.setPoints(5);
 	}
 
 	@Override
@@ -79,7 +80,13 @@ public class Rook extends Piece {
 		this.isMoved = isMoved;
 	}
 
+	public String getSide() {
+		return side;
+	}
 
+	public void setSide(String side) {
+		this.side = side;
+	}
 
 	
 }

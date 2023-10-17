@@ -6,11 +6,13 @@ import Game.Move;
 import Game.Square;
 
 public class Pawn extends Piece {
-	private boolean isPromoted;
+	private boolean isPromoted=false;
 
-	public Pawn(int points, Square square, Color color) {
-		super(points, square, color);
-		this.isPromoted = false;
+
+
+	public Pawn(Color color) {
+		super(color);
+		this.setPoints(1);
 	}
 
 	@Override

@@ -62,12 +62,12 @@ public class Screen {
 
 		private Clock clock;
 		public ScreenEventHandler(){
-			this.clock = new Clock();
-			clock.start();
+			//this.clock = new Clock();
+			//clock.start();
 		}
 
 		public void windowClosing(WindowEvent event){
-			this.clock.terminate();
+			//this.clock.terminate();
 		}
 	}
 
@@ -155,15 +155,15 @@ public class Screen {
 						Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8), boardPanel.selectedSquare.getPiece());
 						if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
 							board.doMove(temp);
-							Game.setTurn(Game.getTurn() ^ 1);
+							game.setTurn(game.getTurn() ^ 1);
 
 							if(board.isChecked(Color.BLACK) ){
 								System.out.println("check");
 							}
-							if(board.isCheckMate(Game.getPlayers(), Game.getTurn())){
+							if(board.isCheckMate(game.getPlayers(), game.getTurn())){
 								System.out.println("checkMate");
 							}
-							if(board.isStaleMate(Game.getPlayers(),Game.getTurn())){
+							if(board.isStaleMate(game.getPlayers(),game.getTurn())){
 								System.out.println("staleMate");
 							}
 
@@ -172,7 +172,6 @@ public class Screen {
 						boardPanel.drawBoard(board);
 						boardPanel.borderUnhighlight();
 						boardPanel.selectedSquare = null;
-						//setBorder(BorderFactory.createEmptyBorder());
 					}
 				}
 

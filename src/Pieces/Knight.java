@@ -7,8 +7,9 @@ import Game.Square;
 
 public class Knight extends Piece {
 
-	public Knight(int points, Square square, Color color) {
-		super(points, square, color);
+	public Knight(Color color) {
+		super(color);
+		this.setPoints(3);
 	}
 
 	@Override

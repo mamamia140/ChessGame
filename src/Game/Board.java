@@ -27,20 +27,20 @@ public class Board {
 		}
 
 		//initializeTheBoard();
-		importGameFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
+		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	private void initializeTheBoard() {
-		this.squares[0][0].setPiece(new Rook(5, this.squares[0][0], Color.WHITE));
-		this.squares[0][1].setPiece(new Knight(3, this.squares[0][1], Color.WHITE));
-		this.squares[0][2].setPiece(new Bishop(3, this.squares[0][2], Color.WHITE));
-		this.squares[0][3].setPiece(new Queen(9, this.squares[0][3], Color.WHITE));
-		this.squares[0][4].setPiece(new King(0, this.squares[0][4], Color.WHITE));
-		this.squares[0][5].setPiece(new Bishop(3, this.squares[0][5], Color.WHITE));
-		this.squares[0][6].setPiece(new Knight(3, this.squares[0][6], Color.WHITE));
-		this.squares[0][7].setPiece(new Rook(5, this.squares[0][7], Color.WHITE));
+		this.squares[0][0].setPiece(new Rook(Color.WHITE));
+		this.squares[0][1].setPiece(new Knight( Color.WHITE));
+		this.squares[0][2].setPiece(new Bishop(Color.WHITE));
+		this.squares[0][3].setPiece(new Queen(Color.WHITE));
+		this.squares[0][4].setPiece(new King(Color.WHITE));
+		this.squares[0][5].setPiece(new Bishop(Color.WHITE));
+		this.squares[0][6].setPiece(new Knight(Color.WHITE));
+		this.squares[0][7].setPiece(new Rook(Color.WHITE));
 		for (int i = 0; i < 8; i++) {
-			this.squares[1][i].setPiece(new Pawn(1, this.squares[1][i], Color.WHITE));
+			this.squares[1][i].setPiece(new Pawn(Color.WHITE));
 		}
 		for (int i = 2; i < 6; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -48,16 +48,16 @@ public class Board {
 			}
 		}
 		for (int i = 0; i < 8; i++) {
-			this.squares[6][i].setPiece(new Pawn(1, this.squares[6][i], Color.BLACK));
+			this.squares[6][i].setPiece(new Pawn( Color.BLACK));
 		}
-		this.squares[7][0].setPiece(new Rook(5, this.squares[7][0], Color.BLACK));
-		this.squares[7][1].setPiece(new Knight(3, this.squares[7][1], Color.BLACK));
-		this.squares[7][2].setPiece(new Bishop(3, this.squares[7][2], Color.BLACK));
-		this.squares[7][3].setPiece(new Queen(9, this.squares[7][3], Color.BLACK));
-		this.squares[7][4].setPiece(new King(0, this.squares[7][4], Color.BLACK));
-		this.squares[7][5].setPiece(new Bishop(3, this.squares[7][5], Color.BLACK));
-		this.squares[7][6].setPiece(new Knight(3, this.squares[7][6], Color.BLACK));
-		this.squares[7][7].setPiece(new Rook(5, this.squares[7][7], Color.BLACK));
+		this.squares[7][0].setPiece(new Rook(Color.BLACK));
+		this.squares[7][1].setPiece(new Knight(Color.BLACK));
+		this.squares[7][2].setPiece(new Bishop( Color.BLACK));
+		this.squares[7][3].setPiece(new Queen(Color.BLACK));
+		this.squares[7][4].setPiece(new King(Color.BLACK));
+		this.squares[7][5].setPiece(new Bishop(Color.BLACK));
+		this.squares[7][6].setPiece(new Knight(Color.BLACK));
+		this.squares[7][7].setPiece(new Rook(Color.BLACK));
 		this.gameRepresentation = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 	}
 
@@ -78,7 +78,7 @@ public class Board {
 		System.out.println();
 	}
 
-	public void importGameFromFEN(String filePath){
+	public void importGamesFromFEN(String filePath){
 		try {
 			int i=7,j=0;
 			File f1 = new File(filePath);
@@ -114,37 +114,37 @@ public class Board {
 	private Piece charToPiece(char c, Square square){
 		switch (c){
 			case 'p':
-				return new Pawn(1,square,Color.BLACK);
+				return new Pawn(Color.BLACK);
 			case 'r':
-				return new Rook(5,square,Color.BLACK);
+				return new Rook(Color.BLACK);
 
 			case 'n':
-				return new Knight(3,square,Color.BLACK);
+				return new Knight(Color.BLACK);
 
 			case 'b':
-				return new Bishop(3,square,Color.BLACK);
+				return new Bishop(Color.BLACK);
 
 			case 'q':
-				return new Queen(9,square,Color.BLACK);
+				return new Queen(Color.BLACK);
 
 			case 'k':
-				return new King(0,square,Color.BLACK);
+				return new King(Color.BLACK);
 			case 'P':
-				return new Pawn(1,square,Color.WHITE);
+				return new Pawn(Color.WHITE);
 			case 'R':
-				return new Rook(5,square,Color.WHITE);
+				return new Rook(Color.WHITE);
 
 			case 'N':
-				return new Knight(3,square,Color.WHITE);
+				return new Knight(Color.WHITE);
 
 			case 'B':
-				return new Bishop(3,square,Color.WHITE);
+				return new Bishop(Color.WHITE);
 
 			case 'Q':
-				return new Queen(9,square,Color.WHITE);
+				return new Queen(Color.WHITE);
 
 			case 'K':
-				return new King(0,square,Color.WHITE);
+				return new King(Color.WHITE);
 			default:
 				return null;
 		}
@@ -154,8 +154,6 @@ public class Board {
 		Square from = move.getFrom();
 		Square to = move.getTo();
 		this.lastTakenPiece = to.getPiece();
-		move.getPiece().setSquare(to);
-
 		to.setPiece(from.getPiece());
 		from.setPiece(null);
 	}
@@ -163,7 +161,6 @@ public class Board {
 	public void undoMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
-		move.getPiece().setSquare(from);
 		from.setPiece(move.getPiece());
 		to.setPiece(lastTakenPiece);
 	}
