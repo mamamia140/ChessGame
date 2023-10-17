@@ -11,18 +11,16 @@ public class Game {
 	private static Player[] players;
 	private Board board;
 	private Move[][] moveHistory;
-	private static int turn;
-	private boolean isOver;
+	private static int turn = 0;
+	private boolean isOver = false;
 
 	public Game(int duration) {
 		this.duration = duration;
 		players = new Player[2];
 		players[0] = new Player(Color.WHITE, duration);
 		players[1] = new Player(Color.BLACK, duration);
-		this.board = new Board();
 		this.moveHistory = new Move[2][];
-		turn = 0;
-		this.isOver = false;
+		this.board = new Board();
 	}
 
 	public int getDuration() {

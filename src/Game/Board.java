@@ -27,18 +27,18 @@ public class Board {
 		}
 
 		//initializeTheBoard();
-		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
+		importGameFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	private void initializeTheBoard() {
-		this.squares[0][0].setPiece(new Rook(5, this.squares[0][0], Color.WHITE, "queen"));
+		this.squares[0][0].setPiece(new Rook(5, this.squares[0][0], Color.WHITE));
 		this.squares[0][1].setPiece(new Knight(3, this.squares[0][1], Color.WHITE));
 		this.squares[0][2].setPiece(new Bishop(3, this.squares[0][2], Color.WHITE));
 		this.squares[0][3].setPiece(new Queen(9, this.squares[0][3], Color.WHITE));
 		this.squares[0][4].setPiece(new King(0, this.squares[0][4], Color.WHITE));
 		this.squares[0][5].setPiece(new Bishop(3, this.squares[0][5], Color.WHITE));
 		this.squares[0][6].setPiece(new Knight(3, this.squares[0][6], Color.WHITE));
-		this.squares[0][7].setPiece(new Rook(5, this.squares[0][7], Color.WHITE, "king"));
+		this.squares[0][7].setPiece(new Rook(5, this.squares[0][7], Color.WHITE));
 		for (int i = 0; i < 8; i++) {
 			this.squares[1][i].setPiece(new Pawn(1, this.squares[1][i], Color.WHITE));
 		}
@@ -50,14 +50,14 @@ public class Board {
 		for (int i = 0; i < 8; i++) {
 			this.squares[6][i].setPiece(new Pawn(1, this.squares[6][i], Color.BLACK));
 		}
-		this.squares[7][0].setPiece(new Rook(5, this.squares[7][0], Color.BLACK, "queen"));
+		this.squares[7][0].setPiece(new Rook(5, this.squares[7][0], Color.BLACK));
 		this.squares[7][1].setPiece(new Knight(3, this.squares[7][1], Color.BLACK));
 		this.squares[7][2].setPiece(new Bishop(3, this.squares[7][2], Color.BLACK));
 		this.squares[7][3].setPiece(new Queen(9, this.squares[7][3], Color.BLACK));
 		this.squares[7][4].setPiece(new King(0, this.squares[7][4], Color.BLACK));
 		this.squares[7][5].setPiece(new Bishop(3, this.squares[7][5], Color.BLACK));
 		this.squares[7][6].setPiece(new Knight(3, this.squares[7][6], Color.BLACK));
-		this.squares[7][7].setPiece(new Rook(5, this.squares[7][7], Color.BLACK, "king"));
+		this.squares[7][7].setPiece(new Rook(5, this.squares[7][7], Color.BLACK));
 		this.gameRepresentation = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 	}
 
@@ -78,7 +78,7 @@ public class Board {
 		System.out.println();
 	}
 
-	public void importGamesFromFEN(String filePath){
+	public void importGameFromFEN(String filePath){
 		try {
 			int i=7,j=0;
 			File f1 = new File(filePath);
@@ -116,7 +116,7 @@ public class Board {
 			case 'p':
 				return new Pawn(1,square,Color.BLACK);
 			case 'r':
-				return new Rook(5,square,Color.BLACK,"queen");
+				return new Rook(5,square,Color.BLACK);
 
 			case 'n':
 				return new Knight(3,square,Color.BLACK);
@@ -132,7 +132,7 @@ public class Board {
 			case 'P':
 				return new Pawn(1,square,Color.WHITE);
 			case 'R':
-				return new Rook(5,square,Color.WHITE,"queen");
+				return new Rook(5,square,Color.WHITE);
 
 			case 'N':
 				return new Knight(3,square,Color.WHITE);
