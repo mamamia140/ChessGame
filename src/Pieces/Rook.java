@@ -1,15 +1,21 @@
 package Pieces;
 
+import java.util.Stack;
+
 import Game.Board;
 import Game.Color;
 import Game.Move;
 import Game.Square;
 
 public class Rook extends Piece {
-	private boolean isMoved = false;
+	
+	private Stack<Boolean> stack;
 
 	public Rook( Color color) {
 		super(color);
+		this.stack = new Stack<Boolean>();
+		this.stack.setSize(2);
+		this.stack.push(false);
 		this.setPoints(5);
 	}
 
@@ -72,12 +78,22 @@ public class Rook extends Piece {
 	}
 
 	public boolean isMoved() {
-		return isMoved;
+		return this.stack.peek();
 	}
 
 	public void setMoved(boolean isMoved) {
-		this.isMoved = isMoved;
+		this.stack.push(isMoved);
 	}
+
+	public Stack<Boolean> getStack() {
+		return stack;
+	}
+
+	public void setStack(Stack<Boolean> stack) {
+		this.stack = stack;
+	}
+	
+	
 
 	
 }

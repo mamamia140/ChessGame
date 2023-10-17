@@ -26,7 +26,7 @@ public class Board {
 			}
 		}
 
-		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
+		importGamesFromFEN("C:\\Users\\m-h-k\\Desktop\\temp.txt");
 	}
 
 	public void printTheBoard() {
@@ -95,32 +95,57 @@ public class Board {
     }
 
 	private Piece charToPiece(char c){
-        return switch (c) {
-            case 'p' -> new Pawn(Color.BLACK);
-            case 'r' -> new Rook(Color.BLACK);
-            case 'n' -> new Knight(Color.BLACK);
-            case 'b' -> new Bishop(Color.BLACK);
-            case 'q' -> new Queen(Color.BLACK);
-            case 'k' -> new King(Color.BLACK);
-            case 'P' -> new Pawn(Color.WHITE);
-            case 'R' -> new Rook(Color.WHITE);
-            case 'N' -> new Knight(Color.WHITE);
-            case 'B' -> new Bishop(Color.WHITE);
-            case 'Q' -> new Queen(Color.WHITE);
-            case 'K' -> new King(Color.WHITE);
-            default -> null;
-        };
+        switch (c) {
+            case 'p':
+            	return new Pawn(Color.BLACK);
+            case 'r':
+            	return new Rook(Color.BLACK);
+            case 'n':
+            	return new Knight(Color.BLACK);
+            case 'b':
+            	return new Bishop(Color.BLACK);
+            case 'q':
+            	return new Queen(Color.BLACK);
+            case 'k':
+            	return new King(Color.BLACK);
+            case 'P':
+            	return new Pawn(Color.WHITE);
+            case 'R':
+            	return new Rook(Color.WHITE);
+            case 'N':
+            	return new Knight(Color.WHITE);
+            case 'B':
+            	return new Bishop(Color.WHITE);
+            case 'Q':
+            	return new Queen(Color.WHITE);
+            case 'K':
+            	return new King(Color.WHITE);
+            default:
+            	return null;
+        }
 	}
 
 	public void doMove(Move move) {
 		Square from = move.getFrom();
 		Square to = move.getTo();
 
-		if(move.getFromPiece().getClass() == King.class || move.getDestinationPiece().getClass() == King.class){
-			((King) move.getFromPiece()).setMoved(true);
+		if(move.getFromPiece().getClass() == King.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == King.class)){
+			if(move.getFromPiece().getClass() == King.class) {
+				((King) move.getFromPiece()).setMoved(true);
+			}
+			else {
+				((King) move.getDestinationPiece()).setMoved(true);
+			}
+			
 		}
-		if(move.getFromPiece().getClass() == Rook.class || move.getDestinationPiece().getClass() == Rook.class){
-			((Rook) move.getFromPiece()).setMoved(true);
+		if(move.getFromPiece().getClass() == Rook.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == Rook.class)){
+			if(move.getFromPiece().getClass() == Rook.class) {
+				((Rook) move.getFromPiece()).setMoved(true);
+			}
+			else {
+				((Rook) move.getDestinationPiece()).setMoved(true);
+			}
+			
 		}
 
 		if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class ){
@@ -150,11 +175,24 @@ public class Board {
 		Square from = move.getFrom();
 		Square to = move.getTo();
 
-		if(move.getFromPiece().getClass() == King.class || move.getDestinationPiece().getClass() == King.class){
-			((King) move.getFromPiece()).setMoved(false);
+		if(move.getFromPiece().getClass() == King.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == King.class)){
+			
+			
+			if(move.getFromPiece().getClass() == King.class) {
+				((King) move.getFromPiece()).getStack().pop();
+			}
+			else {
+				((King) move.getDestinationPiece()).getStack().pop();
+			}
 		}
-		if(move.getFromPiece().getClass() == Rook.class || move.getDestinationPiece().getClass() == Rook.class){
-			((Rook) move.getFromPiece()).setMoved(true);
+		if(move.getFromPiece().getClass() == Rook.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == Rook.class)){
+			
+			if(move.getFromPiece().getClass() == Rook.class) {
+				((Rook) move.getFromPiece()).getStack().pop();
+			}
+			else {
+				((Rook) move.getDestinationPiece()).getStack().pop();
+			}
 		}
 
 		if(move.getFromPiece().getClass() == King.class && move.getDestinationPiece() != null && move.getFromPiece().getColor() == move.getDestinationPiece().getColor() && move.getDestinationPiece().getClass() == Rook.class ){

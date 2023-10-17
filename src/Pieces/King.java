@@ -10,8 +10,6 @@ import Game.Square;
 
 public class King extends Piece {
 
-	private boolean isMoved=false;
-
 	private Stack<Boolean> stack;
 
 
@@ -52,7 +50,7 @@ public class King extends Piece {
 	}
 	
 	public boolean canCastle(Rook rook, Board board) {
-        return !this.isMoved && !rook.isMoved() && !board.isChecked(this.getColor()) && checkIfPathIsClear(rook, board);
+        return !this.isMoved() && !rook.isMoved() && !board.isChecked(this.getColor()) && checkIfPathIsClear(rook, board);
     }
 	
 	private boolean checkIfPathIsClear(Rook rook, Board board) {
@@ -78,11 +76,11 @@ public class King extends Piece {
 	}
 
 	public boolean isMoved() {
-		return isMoved;
+		return this.stack.peek();
 	}
 
 	public void setMoved(boolean isMoved) {
-		this.isMoved = isMoved;
+		this.stack.push(isMoved);
 	}
 
 	public Stack<Boolean> getStack() {
