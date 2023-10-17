@@ -26,8 +26,8 @@ public class Board {
 			}
 		}
 
-		initializeTheBoard();
-
+		//initializeTheBoard();
+		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	private void initializeTheBoard() {
@@ -80,18 +80,73 @@ public class Board {
 
 	public void importGamesFromFEN(String filePath){
 		try {
+			int i=7,j=0;
 			File f1 = new File(filePath);
 			Scanner dataReader = new Scanner(f1);
 			while (dataReader.hasNextLine()) {
 				String fileData = dataReader.nextLine();
-				for(String s : fileData.split(" ")[0].split("/")) {
-					System.out.println(s);
+				this.gameRepresentation = fileData;
+				for(String line : fileData.split(" ")[0].split("/")) {
+					j=0;
+					for(char c: line.toCharArray()){
+
+						if ((int) c >= 48 && (int) c <= 57) {
+							for (int y = 0; y < (int) c - 48; y++) {
+								this.squares[i][j].setPiece(null);
+								j++;
+							}
+						} else {
+							this.squares[i][j].setPiece(charToPiece(c,squares[i][j]));
+							j++;
+						}
+					}
+					i--;
+
 				}
 				
 			}
 			dataReader.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private Piece charToPiece(char c, Square square){
+		switch (c){
+			case 'p':
+				return new Pawn(1,square,Color.BLACK);
+			case 'r':
+				return new Rook(5,square,Color.BLACK,"queen");
+
+			case 'n':
+				return new Knight(3,square,Color.BLACK);
+
+			case 'b':
+				return new Bishop(3,square,Color.BLACK);
+
+			case 'q':
+				return new Queen(9,square,Color.BLACK);
+
+			case 'k':
+				return new King(0,square,Color.BLACK);
+			case 'P':
+				return new Pawn(1,square,Color.WHITE);
+			case 'R':
+				return new Rook(5,square,Color.WHITE,"queen");
+
+			case 'N':
+				return new Knight(3,square,Color.WHITE);
+
+			case 'B':
+				return new Bishop(3,square,Color.WHITE);
+
+			case 'Q':
+				return new Queen(9,square,Color.WHITE);
+
+			case 'K':
+				return new King(0,square,Color.WHITE);
+			default:
+				return null;
 		}
 	}
 

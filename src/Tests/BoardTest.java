@@ -11,6 +11,6 @@ class BoardTest {
 	@Test
     void importGamesFromFEN() {
         Board board = new Board();
-        board.importGamesFromFEN("C:\\Users\\m-h-k\\Desktop\\temp.txt");
+        board.importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
     }
 }
