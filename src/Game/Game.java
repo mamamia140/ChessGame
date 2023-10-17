@@ -1,18 +1,13 @@
 package Game;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import GUI.*;
-import Pieces.*;
-
 public class Game {
 	private int duration;
-	private static Player[] players;
+
+	private Player[] players;
 	private Board board;
 	private Move[][] moveHistory;
-	private static int turn;
-	private boolean isOver;
+	private int turn = 0;
+	private boolean isOver = false;
 
 	public Game(int duration) {
 		this.duration = duration;
@@ -21,8 +16,6 @@ public class Game {
 		players[1] = new Player(Color.BLACK, duration);
 		this.board = new Board();
 		this.moveHistory = new Move[2][];
-		turn = 0;
-		this.isOver = false;
 	}
 
 	public int getDuration() {
@@ -33,7 +26,7 @@ public class Game {
 		this.duration = duration;
 	}
 
-	public static Player[] getPlayers() {
+	public Player[] getPlayers() {
 		return players;
 	}
 
@@ -53,16 +46,16 @@ public class Game {
 		this.moveHistory = moveHistory;
 	}
 
-	public static int getTurn() {
-		return turn;
+	public int getTurn() {
+		return this.turn;
 	}
 
-	public static void setTurn(int newTurn) {
-		turn = newTurn;
+	public void setTurn(int turn) {
+		this.turn = turn;
 	}
 
-	public static Player getCurrentPlayer() {
-		return Game.getPlayers()[Game.getTurn()];
+	public Player getCurrentPlayer() {
+		return getPlayers()[this.getTurn()];
 	}
 
 	public void start() {

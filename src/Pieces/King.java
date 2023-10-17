@@ -10,11 +10,11 @@ import Game.Square;
 
 public class King extends Piece {
 
-	private boolean isMoved;
+	private boolean isMoved=false;
 
-	public King(int points, Square square, Color color) {
-		super(points, square, color);
-		this.isMoved = false;
+	public King(Color color) {
+		super(color);
+		this.setPoints(0);
 	}
 
 	@Override
