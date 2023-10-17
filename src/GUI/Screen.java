@@ -38,7 +38,7 @@ public class Screen {
 
 	private final java.awt.Color highlightColor = java.awt.Color.decode("#a1eb34");
 	
-	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600); 
+	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600);
 	private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,400);
 	private final static Dimension TILE_PANEL_DIMENSION = new Dimension(50,50);
 	
@@ -145,9 +145,12 @@ public class Screen {
 				public void mouseClicked(MouseEvent e) {
 					if(boardPanel.selectedSquare == null) {
 						if(board.getSquare(tileId/8, tileId%8).getPiece() != null) {
-							boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
-							boardPanel.highlightTheBoard(boardPanel.selectedSquare.getPiece(), board);
-							boardPanel.borderHighlight(tileId);
+							if(board.getSquare(tileId/8, tileId%8).getPiece().getColor()  == game.getCurrentPlayer().getColor()){
+								boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
+								boardPanel.highlightTheBoard(boardPanel.selectedSquare.getPiece(), board);
+								boardPanel.borderHighlight(tileId);
+							}
+
 						}
 
 					}

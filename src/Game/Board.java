@@ -26,8 +26,8 @@ public class Board {
 			}
 		}
 
-		//initializeTheBoard();
-		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
+		initializeTheBoard();
+		//importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	private void initializeTheBoard() {
@@ -63,7 +63,7 @@ public class Board {
 
 	public void printTheBoard() {
 		for (int i = 0; i < this.gameRepresentation.length(); i++) {
-			int character = (int) this.gameRepresentation.charAt(i);
+			int character = this.gameRepresentation.charAt(i);
 			if (character == 47) {
 				System.out.println();
 			} else if (character >= 48 && character <= 57) {
@@ -80,30 +80,13 @@ public class Board {
 
 	public void importGamesFromFEN(String filePath){
 		try {
-			int i=7,j=0;
+
 			File f1 = new File(filePath);
 			Scanner dataReader = new Scanner(f1);
 			while (dataReader.hasNextLine()) {
-				String fileData = dataReader.nextLine();
-				this.gameRepresentation = fileData;
-				for(String line : fileData.split(" ")[0].split("/")) {
-					j=0;
-					for(char c: line.toCharArray()){
-
-						if ((int) c >= 48 && (int) c <= 57) {
-							for (int y = 0; y < (int) c - 48; y++) {
-								this.squares[i][j].setPiece(null);
-								j++;
-							}
-						} else {
-							this.squares[i][j].setPiece(charToPiece(c,squares[i][j]));
-							j++;
-						}
-					}
-					i--;
-
-				}
-				
+				String fenString = dataReader.nextLine();
+				this.gameRepresentation = fenString;
+				placePiecesOnTheBoard(fenString);
 			}
 			dataReader.close();
 		} catch (FileNotFoundException e) {
@@ -111,43 +94,48 @@ public class Board {
 		}
 	}
 
-	private Piece charToPiece(char c, Square square){
-		switch (c){
-			case 'p':
-				return new Pawn(Color.BLACK);
-			case 'r':
-				return new Rook(Color.BLACK);
+	private void placePiecesOnTheBoard(String fenString){
+		int i=7,j=0;
+		String[] ranks = fenString.split(" ")[0].split("/");
+		for(String rank : ranks) {
+			j=0;
+			for(char c: rank.toCharArray()){
 
-			case 'n':
-				return new Knight(Color.BLACK);
+				if (isCharANumber(c)) {
+					for (int counter = 0; counter < c - 48; counter++) {
+						this.squares[i][j].setPiece(null);
+						j++;
+					}
+				} else {
+					this.squares[i][j].setPiece(charToPiece(c));
+					j++;
+				}
+			}
+			i--;
 
-			case 'b':
-				return new Bishop(Color.BLACK);
-
-			case 'q':
-				return new Queen(Color.BLACK);
-
-			case 'k':
-				return new King(Color.BLACK);
-			case 'P':
-				return new Pawn(Color.WHITE);
-			case 'R':
-				return new Rook(Color.WHITE);
-
-			case 'N':
-				return new Knight(Color.WHITE);
-
-			case 'B':
-				return new Bishop(Color.WHITE);
-
-			case 'Q':
-				return new Queen(Color.WHITE);
-
-			case 'K':
-				return new King(Color.WHITE);
-			default:
-				return null;
 		}
+	}
+
+	private boolean isCharANumber(char c){
+        return c >= 48 && c <= 57;
+    }
+
+	private Piece charToPiece(char c){
+        return switch (c) {
+            case 'p' -> new Pawn(Color.BLACK);
+            case 'r' -> new Rook(Color.BLACK);
+            case 'n' -> new Knight(Color.BLACK);
+            case 'b' -> new Bishop(Color.BLACK);
+            case 'q' -> new Queen(Color.BLACK);
+            case 'k' -> new King(Color.BLACK);
+            case 'P' -> new Pawn(Color.WHITE);
+            case 'R' -> new Rook(Color.WHITE);
+            case 'N' -> new Knight(Color.WHITE);
+            case 'B' -> new Bishop(Color.WHITE);
+            case 'Q' -> new Queen(Color.WHITE);
+            case 'K' -> new King(Color.WHITE);
+            default -> null;
+        };
 	}
 
 	public void doMove(Move move) {
