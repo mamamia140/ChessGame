@@ -16,11 +16,6 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move() {
-
-	}
-
-	@Override
 	public boolean isValid(Move move, Board board) {
 
 		if (move.getTo().getPiece() != null

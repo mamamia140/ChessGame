@@ -18,8 +18,6 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	public abstract void move();
-
 	public abstract boolean isValid(Move move, Board board);
 
 	public boolean isAttacks(Square square, Board board) {

@@ -26,7 +26,7 @@ public class Board {
 			}
 		}
 
-		importGamesFromFEN("C:\\Users\\m-h-k\\Desktop\\temp.txt");
+		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
 	}
 
 	public void printTheBoard() {

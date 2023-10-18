@@ -13,10 +13,6 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void move() {
-	};
-
-	@Override
 	public boolean isValid(Move move, Board board) {
 		if (move.getTo().getPiece() != null
 				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {

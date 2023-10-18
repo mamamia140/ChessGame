@@ -15,15 +15,12 @@ public class King extends Piece {
 
 	public King(Color color) {
 		super(color);
-		this.stack = new Stack<Boolean>();
+		this.stack = new Stack<>();
 		this.stack.setSize(2);
 		this.stack.push(false);
 		this.setPoints(0);
 	}
 
-	@Override
-	public void move() {
-	};
 
 	@Override
 	public boolean isValid(Move move, Board board) {

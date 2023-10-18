@@ -3,11 +3,11 @@ package Game;
 import Pieces.*;
 
 public class Move {
-	private Square from;
-	private Square to;
-	private Piece fromPiece;
+	private final Square from;
+	private final Square to;
+	private final Piece fromPiece;
 
-	private Piece destinationPiece;
+	private final Piece destinationPiece;
 
 	public Move(Square from, Square to) {
 		this.from = from;

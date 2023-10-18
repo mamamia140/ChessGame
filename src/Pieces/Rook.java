@@ -20,10 +20,6 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public void move() {
-	};
-
-	@Override
 	public boolean isValid(Move move, Board board) {
 
 		if (move.getTo().getPiece() != null
@@ -70,11 +66,7 @@ public class Rook extends Piece {
 			}
 		}
 
-		if (i == Math.abs(fromColumn - toColumn) || i == Math.abs(fromRow - toRow)) {
-			return true;
-		} else {
-			return false;
-		}
+        return (i == Math.abs(fromColumn - toColumn)) || (i == Math.abs(fromRow - toRow));
 	}
 
 	public boolean isMoved() {
