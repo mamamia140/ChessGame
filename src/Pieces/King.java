@@ -37,7 +37,15 @@ public class King extends Piece {
 			int toColumn = move.getTo().getColumn();
 			int toRow = move.getTo().getRow();
 			if (Math.abs(fromColumn - toColumn) <= 1 && Math.abs(fromRow - toRow) <= 1) {
-				return true;
+				board.doMove(move);
+				if(!board.isChecked(this.getColor())){
+					board.undoMove(move);
+					return true;
+				}
+				else{
+					board.undoMove(move);
+					return false;
+				}
 			}
 			else {
 				return false;

@@ -30,20 +30,52 @@ public class Pawn extends Piece {
 			int toRow = move.getTo().getRow();
 			if (this.getColor() == Color.BLACK) {
 				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty()) {
-					return true;
+					board.doMove(move);
+					if(!board.isChecked(this.getColor())){
+						board.undoMove(move);
+						return true;
+					}
+					else{
+						board.undoMove(move);
+						return false;
+					}
 				}
 				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					return true;
+					board.doMove(move);
+					if(!board.isChecked(this.getColor())){
+						board.undoMove(move);
+						return true;
+					}
+					else{
+						board.undoMove(move);
+						return false;
+					}
 				}
 			} else {
 				if (fromRow == 1 && toRow == 3 && fromColumn == toColumn && board.getSquare(2, fromColumn).isEmpty()) {
-					return true;
+					board.doMove(move);
+					if(!board.isChecked(this.getColor())){
+						board.undoMove(move);
+						return true;
+					}
+					else{
+						board.undoMove(move);
+						return false;
+					}
 				}
 
 				if ((toRow - fromRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					return true;
+					board.doMove(move);
+					if(!board.isChecked(this.getColor())){
+						board.undoMove(move);
+						return true;
+					}
+					else{
+						board.undoMove(move);
+						return false;
+					}
 				}
 
 			}

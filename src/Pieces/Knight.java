@@ -26,7 +26,15 @@ public class Knight extends Piece {
 
 			if ((Math.abs(fromRow - toRow) == 1 && Math.abs(fromColumn - toColumn) == 2)
 					|| (Math.abs(fromRow - toRow) == 2 && Math.abs(fromColumn - toColumn) == 1)) {
-				return true;
+				board.doMove(move);
+				if(!board.isChecked(this.getColor())){
+					board.undoMove(move);
+					return true;
+				}
+				else{
+					board.undoMove(move);
+					return false;
+				}
 			} else {
 				return false;
 			}

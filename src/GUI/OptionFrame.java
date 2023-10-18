@@ -18,11 +18,11 @@ public class OptionFrame{
         this.optionWindow = new JFrame();
         this.optionWindow.setLayout(new GridLayout(1,4));
         this.optionWindow.setTitle("Select a piece");
-        this.optionWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.optionWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.optionWindow.setResizable(false);
 
         for(int i=0; i< 4;i++){
-            this.pieceTiles[0][i] = new PieceTile(i);
+            this.pieceTiles[0][i] = new PieceTile(optionWindow, i);
             this.optionWindow.add(this.pieceTiles[0][i]);
         }
         this.optionWindow.pack();
@@ -37,7 +37,7 @@ public class OptionFrame{
     private class PieceTile extends JPanel{
         private final int id;
 
-        PieceTile(final int id){
+        PieceTile(JFrame optionWindow,final int id){
             super(new GridBagLayout());
             this.id = id;
             setPreferredSize(PIECE_FRAME_DIMENSION);
@@ -47,6 +47,7 @@ public class OptionFrame{
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println(id);
+                    optionWindow.dispose();
                 }
 
                 @Override

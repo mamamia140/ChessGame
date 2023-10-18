@@ -28,7 +28,19 @@ public class Rook extends Piece {
 		} else {
 			if (move.getFrom().getRow() == move.getTo().getRow()
 					|| move.getFrom().getColumn() == move.getTo().getColumn()) {
-				return isPathEmpty(move.getFrom(), move.getTo(), board);
+				if(isPathEmpty(move.getFrom(), move.getTo(), board)){
+					board.doMove(move);
+					if(!board.isChecked(this.getColor())){
+						board.undoMove(move);
+						return true;
+					}
+					else{
+						board.undoMove(move);
+						return false;
+					}
+				}else{
+					return false;
+				}
 			} else {
 				return false;
 			}
