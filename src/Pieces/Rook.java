@@ -13,7 +13,7 @@ public class Rook extends Piece {
 
 	public Rook( Color color) {
 		super(color);
-		this.stack = new Stack<Boolean>();
+		this.stack = new Stack<>();
 		this.stack.setSize(2);
 		this.stack.push(false);
 		this.setPoints(5);
@@ -29,23 +29,25 @@ public class Rook extends Piece {
 			if (move.getFrom().getRow() == move.getTo().getRow()
 					|| move.getFrom().getColumn() == move.getTo().getColumn()) {
 				if(isPathEmpty(move.getFrom(), move.getTo(), board)){
-					board.doMove(move);
-					if(!board.isChecked(this.getColor())){
-						board.undoMove(move);
-						return true;
-					}
-					else{
-						board.undoMove(move);
-						return false;
-					}
-				}else{
-					return false;
+					return true;
 				}
 			} else {
 				return false;
 			}
 		}
+		return false;
+	}
 
+	@Override
+	public void doMove(Move move, Board board) {
+		this.stack.push(true);
+		move.doMove(board);
+	}
+
+	@Override
+	public void undoMove(Move move, Board board) {
+		this.stack.pop();
+		move.doMove(board);
 	}
 
 	private boolean isPathEmpty(Square from, Square to, Board board) {

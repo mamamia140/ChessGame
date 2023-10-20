@@ -3,10 +3,7 @@ package Pieces;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import Game.Board;
-import Game.Color;
-import Game.Move;
-import Game.Square;
+import Game.*;
 
 public abstract class Piece {
 	private int points;
@@ -21,8 +18,12 @@ public abstract class Piece {
 	public abstract boolean isValid(Move move, Board board);
 
 	public boolean isAttacks(Square square, Board board) {
-		return isValid(new Move(this.getSquare(), square), board);
+		return isValid(new StandartMove(this.getSquare(), square), board);
 	}
+
+	public abstract void doMove(Move move, Board board);
+
+	public abstract void undoMove(Move move, Board board);
 
 	public Collection<Move> getAllPossibleMoves(Board board) {
 
@@ -30,7 +31,7 @@ public abstract class Piece {
 		Square[][] squares = board.getSquares();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Move tempMove = new Move(this.square, squares[i][j]);
+				Move tempMove = new StandartMove(this.square, squares[i][j]);
 				if (isValid(tempMove, board)) {
 					allPossibleMoves.add(tempMove);
 				}

@@ -3,10 +3,7 @@ package Pieces;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import Game.Board;
-import Game.Color;
-import Game.Move;
-import Game.Square;
+import Game.*;
 
 public class King extends Piece {
 
@@ -37,15 +34,7 @@ public class King extends Piece {
 			int toColumn = move.getTo().getColumn();
 			int toRow = move.getTo().getRow();
 			if (Math.abs(fromColumn - toColumn) <= 1 && Math.abs(fromRow - toRow) <= 1) {
-				board.doMove(move);
-				if(!board.isChecked(this.getColor())){
-					board.undoMove(move);
-					return true;
-				}
-				else{
-					board.undoMove(move);
-					return false;
-				}
+				return true;
 			}
 			else {
 				return false;
@@ -53,7 +42,19 @@ public class King extends Piece {
 		}
 
 	}
-	
+
+	@Override
+	public void doMove(Move move, Board board) {
+		this.stack.push(true);
+		move.doMove(board);
+	}
+
+	@Override
+	public void undoMove(Move move, Board board) {
+		this.stack.pop();
+		move.undoMove(board);
+	}
+
 	public boolean canCastle(Rook rook, Board board) {
         return !this.isMoved() && !rook.isMoved() && !board.isChecked(this.getColor()) && checkIfPathIsClear(rook, board);
     }
@@ -61,20 +62,20 @@ public class King extends Piece {
 	private boolean checkIfPathIsClear(Rook rook, Board board) {
 
 		ArrayList<Square> squares = (ArrayList<Square>) board.getSquares(rook.getSquare(), this.getSquare());
-		Move tempMove;
+		Move move;
 		int i=0;
 		if(squares.size() > 3){
 			return false;
 		}
 		while(i < squares.size() && squares.get(i).isEmpty()) {
 
-			tempMove = new Move(this.getSquare(),squares.get(i));
-			board.doMove(tempMove);
+			move = new StandartMove(this.getSquare(),squares.get(i));
+			this.doMove(move,board);
 			if(board.isChecked(this.getColor())) {
-				board.undoMove(tempMove);
+				this.undoMove(move,board);
 				break;
 			}
-			board.undoMove(tempMove);
+			this.undoMove(move,board);
 			i++;
 		}
         return i == squares.size() && i != 0;

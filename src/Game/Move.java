@@ -2,7 +2,7 @@ package Game;
 
 import Pieces.*;
 
-public class Move {
+public abstract class Move {
 	private final Square from;
 	private final Square to;
 	private final Piece fromPiece;
@@ -33,4 +33,9 @@ public class Move {
 	public Piece getDestinationPiece() {
 		return destinationPiece;
 	}
+
+	abstract public void doMove(Board board);
+
+	abstract public void undoMove(Board board);
 }
+

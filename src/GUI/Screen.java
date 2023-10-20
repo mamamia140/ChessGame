@@ -11,8 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -107,7 +105,7 @@ public class Screen {
 
 			for(int i=7; i >= 0 ; i--) {
 				for(int j=0; j<8;j++){
-					if(piece.isValid(new Move(piece.getSquare(),board.getSquare(i,j)),board)){
+					if(piece.isValid(new StandartMove(piece.getSquare(),board.getSquare(i,j)),board)){
 						boardTiles[i][j].highlight(board);
 					}
 				}
@@ -155,20 +153,20 @@ public class Screen {
 
 					}
 					else {
-						Move temp = new Move(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8));
-						if(boardPanel.selectedSquare.getPiece().isValid(temp, board)) {
-							board.doMove(temp);
-							game.setTurn(game.getTurn() ^ 1);
+						Move move = createMove(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8));
+						if(boardPanel.selectedSquare.getPiece().isValid(move, board)) {
+							boardPanel.selectedSquare.getPiece().doMove(move,board);
+							Game.setTurn(Game.getTurn() ^ 1);
 
-							if(board.isChecked(Color.BLACK) ){
-								System.out.println("check");
-							}
-							if(board.isCheckMate(game.getPlayers(), game.getTurn())){
-								System.out.println("checkMate");
-							}
-							if(board.isStaleMate(game.getPlayers(),game.getTurn())){
-								System.out.println("staleMate");
-							}
+//							if(board.isChecked(Color.BLACK) ){
+//								System.out.println("check");
+//							}
+//							if(board.isCheckMate(game.getPlayers(), game.getTurn())){
+//								System.out.println("checkMate");
+//							}
+//							if(board.isStaleMate(game.getPlayers(),game.getTurn())){
+//								System.out.println("staleMate");
+//							}
 
 						}
 
@@ -201,7 +199,23 @@ public class Screen {
 			
 			validate();
 		}
-		
+
+
+		private Move createMove(Square from, Square to){
+
+			if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class){
+				return new CastlingMove(from, to);
+			} else if (false) {
+				return new EnPassantMove(from, to);
+			} else if (false) {
+				return new PromotionMove(from, to);
+			}else{
+				return new StandartMove(from, to);
+			}
+
+		}
+
+
 		void drawTile(Board board) {
             assignTileColor();
             assignTilePieceIcon(board);

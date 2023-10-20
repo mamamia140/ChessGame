@@ -125,99 +125,6 @@ public class Board {
         }
 	}
 
-	public void doMove(Move move) {
-		Square from = move.getFrom();
-		Square to = move.getTo();
-
-		if(move.getFromPiece().getClass() == King.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == King.class)){
-			if(move.getFromPiece().getClass() == King.class) {
-				((King) move.getFromPiece()).setMoved(true);
-			}
-			else {
-				((King) move.getDestinationPiece()).setMoved(true);
-			}
-			
-		}
-		if(move.getFromPiece().getClass() == Rook.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == Rook.class)){
-			if(move.getFromPiece().getClass() == Rook.class) {
-				((Rook) move.getFromPiece()).setMoved(true);
-			}
-			else {
-				((Rook) move.getDestinationPiece()).setMoved(true);
-			}
-			
-		}
-
-		if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class ){
-
-			if(from.getColumn() < to.getColumn()){
-				getSquare(from.getRow(),from.getColumn() + 2).setPiece(from.getPiece());
-				getSquare(from.getRow(),from.getColumn() + 1).setPiece(to.getPiece());
-				from.setPiece(null);
-				to.setPiece(null);
-			}
-			else{
-				getSquare(from.getRow(),from.getColumn() - 2).setPiece(from.getPiece());
-				getSquare(from.getRow(),from.getColumn() - 1).setPiece(to.getPiece());
-				from.setPiece(null);
-				to.setPiece(null);
-			}
-		}
-		else{
-			this.lastTakenPiece = to.getPiece();
-			to.setPiece(from.getPiece());
-			from.setPiece(null);
-		}
-
-	}
-
-	public void undoMove(Move move) {
-		Square from = move.getFrom();
-		Square to = move.getTo();
-
-		if(move.getFromPiece().getClass() == King.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == King.class)){
-			
-			
-			if(move.getFromPiece().getClass() == King.class) {
-				((King) move.getFromPiece()).getStack().pop();
-			}
-			else {
-				((King) move.getDestinationPiece()).getStack().pop();
-			}
-		}
-		if(move.getFromPiece().getClass() == Rook.class || (move.getDestinationPiece() != null && move.getDestinationPiece().getClass() == Rook.class)){
-			
-			if(move.getFromPiece().getClass() == Rook.class) {
-				((Rook) move.getFromPiece()).getStack().pop();
-			}
-			else {
-				((Rook) move.getDestinationPiece()).getStack().pop();
-			}
-		}
-
-		if(move.getFromPiece().getClass() == King.class && move.getDestinationPiece() != null && move.getFromPiece().getColor() == move.getDestinationPiece().getColor() && move.getDestinationPiece().getClass() == Rook.class ){
-			if(from.getColumn() < to.getColumn()){
-
-				from.setPiece(move.getFromPiece());
-				getSquare(from.getRow(),from.getColumn() + 2).setPiece(null);
-				to.setPiece(move.getDestinationPiece());
-				getSquare(from.getRow(),from.getColumn() + 1).setPiece(null);
-
-			}
-			else{
-				from.setPiece(move.getFromPiece());
-				getSquare(from.getRow(),from.getColumn() - 2).setPiece(null);
-				to.setPiece(move.getDestinationPiece());
-				getSquare(from.getRow(),from.getColumn() - 1).setPiece(null);
-			}
-		}
-		else{
-			from.setPiece(move.getFromPiece());
-			to.setPiece(lastTakenPiece);
-		}
-
-	}
-
 	@Override
 	public String toString() {
 		return "Board \n" + Arrays.toString(squares);
@@ -237,6 +144,14 @@ public class Board {
 
 	public String getGameRepresentation() {
 		return gameRepresentation;
+	}
+
+	public Piece getLastTakenPiece() {
+		return lastTakenPiece;
+	}
+
+	public void setLastTakenPiece(Piece lastTakenPiece) {
+		this.lastTakenPiece = lastTakenPiece;
 	}
 
 	public void setGameRepresentation(String gameRepresentation) {
@@ -382,12 +297,12 @@ public class Board {
 			moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
 			i = 0;
 			while (i < moves.size()) {
-				doMove(moves.get(i));
+				moves.get(i).doMove(this);
 				if (!isChecked(players[turn].getColor())) {
-					undoMove(moves.get(i++));
+					moves.get(i++).undoMove(this);
 					break;
 				} else {
-					undoMove(moves.get(i++));
+					moves.get(i++).undoMove(this);
 				}
 			}
 			if (i != moves.size()) {

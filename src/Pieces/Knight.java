@@ -26,13 +26,13 @@ public class Knight extends Piece {
 
 			if ((Math.abs(fromRow - toRow) == 1 && Math.abs(fromColumn - toColumn) == 2)
 					|| (Math.abs(fromRow - toRow) == 2 && Math.abs(fromColumn - toColumn) == 1)) {
-				board.doMove(move);
+				this.doMove(move,board);
 				if(!board.isChecked(this.getColor())){
-					board.undoMove(move);
+					this.undoMove(move,board);
 					return true;
 				}
 				else{
-					board.undoMove(move);
+					this.undoMove(move,board);
 					return false;
 				}
 			} else {
@@ -40,6 +40,16 @@ public class Knight extends Piece {
 			}
 		}
 
+	}
+
+	@Override
+	public void doMove(Move move, Board board) {
+		move.doMove(board);
+	}
+
+	@Override
+	public void undoMove(Move move, Board board) {
+		move.undoMove(board);
 	}
 
 }

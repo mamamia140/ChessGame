@@ -27,6 +27,16 @@ public class Bishop extends Piece {
 		return false;
 	}
 
+	@Override
+	public void doMove(Move move, Board board) {
+		move.doMove(board);
+	}
+
+	@Override
+	public void undoMove(Move move, Board board) {
+		move.undoMove(board);
+	}
+
 	private boolean isPathEmpty(Square from, Square to, Board board) {
 		int fromColumn = from.getColumn();
 		int fromRow = from.getRow();

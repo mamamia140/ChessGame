@@ -30,50 +30,50 @@ public class Pawn extends Piece {
 			int toRow = move.getTo().getRow();
 			if (this.getColor() == Color.BLACK) {
 				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty()) {
-					board.doMove(move);
+					this.doMove(move,board);
 					if(!board.isChecked(this.getColor())){
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return true;
 					}
 					else{
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return false;
 					}
 				}
 				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					board.doMove(move);
+					this.doMove(move,board);
 					if(!board.isChecked(this.getColor())){
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return true;
 					}
 					else{
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return false;
 					}
 				}
 			} else {
 				if (fromRow == 1 && toRow == 3 && fromColumn == toColumn && board.getSquare(2, fromColumn).isEmpty()) {
-					board.doMove(move);
+					this.doMove(move,board);
 					if(!board.isChecked(this.getColor())){
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return true;
 					}
 					else{
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return false;
 					}
 				}
 
 				if ((toRow - fromRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
 						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					board.doMove(move);
+					this.doMove(move,board);
 					if(!board.isChecked(this.getColor())){
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return true;
 					}
 					else{
-						board.undoMove(move);
+						this.undoMove(move,board);
 						return false;
 					}
 				}
@@ -82,6 +82,16 @@ public class Pawn extends Piece {
 			return false;
 		}
 
+	}
+
+	@Override
+	public void doMove(Move move, Board board) {
+		move.doMove(board);
+	}
+
+	@Override
+	public void undoMove(Move move, Board board) {
+		move.undoMove(board);
 	}
 
 	public boolean isPromoted() {
