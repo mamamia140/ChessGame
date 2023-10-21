@@ -2,6 +2,7 @@ package Pieces;
 
 import Game.Board;
 import Game.Color;
+import Game.Game;
 import Game.Move;
 import Game.Square;
 
@@ -15,8 +16,8 @@ public class Knight extends Piece {
 	@Override
 	public boolean isValid(Move move, Board board) {
 
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
 			return false;
 		} else {
 			int fromColumn = move.getFrom().getColumn();
@@ -26,15 +27,7 @@ public class Knight extends Piece {
 
 			if ((Math.abs(fromRow - toRow) == 1 && Math.abs(fromColumn - toColumn) == 2)
 					|| (Math.abs(fromRow - toRow) == 2 && Math.abs(fromColumn - toColumn) == 1)) {
-				this.doMove(move,board);
-				if(!board.isChecked(this.getColor())){
-					this.undoMove(move,board);
-					return true;
-				}
-				else{
-					this.undoMove(move,board);
-					return false;
-				}
+				return true;
 			} else {
 				return false;
 			}

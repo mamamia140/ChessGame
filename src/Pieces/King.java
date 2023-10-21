@@ -21,10 +21,11 @@ public class King extends Piece {
 
 	@Override
 	public boolean isValid(Move move, Board board) {
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == this.getColor()) {
-			if(move.getTo().getPiece().getClass() == Rook.class){
-				return canCastle((Rook) move.getTo().getPiece(),board);
+		
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == this.getColor()) {
+			if(move.getDestinationPiece().getClass() == Rook.class){
+				return canCastle((Rook) move.getDestinationPiece(),board);
 			}
 			return false;
 		}

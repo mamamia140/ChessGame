@@ -3,7 +3,7 @@ package Game;
 public class Game {
 	private int duration;
 
-	private Player[] players;
+	private static Player[] players;
 	private Board board;
 	private Move[][] moveHistory;
 	private static int turn = 0;
@@ -54,8 +54,8 @@ public class Game {
 		Game.turn = turn;
 	}
 
-	public Player getCurrentPlayer() {
-		return getPlayers()[this.getTurn()];
+	public static Player getCurrentPlayer() {
+		return players[turn];
 	}
 
 	public void start() {

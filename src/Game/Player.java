@@ -6,10 +6,12 @@ public class Player {
 
 	private Color color;
 	private Piece[] pieces;
+	private boolean checked;
 	private long timeLeft;
 
 	public Player(Color color, long timeLeft) {
 		this.color = color;
+		this.checked = false;
 		this.timeLeft = timeLeft;
 	}
 
@@ -36,5 +38,14 @@ public class Player {
 	public void setTimeLeft(long timeLeft) {
 		this.timeLeft = timeLeft;
 	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	
 
 }

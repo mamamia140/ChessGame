@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import Game.Board;
 import Game.Color;
+import Game.Game;
 import Game.Move;
 import Game.Square;
 
@@ -22,17 +23,13 @@ public class Rook extends Piece {
 	@Override
 	public boolean isValid(Move move, Board board) {
 
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
 			return false;
 		} else {
 			if (move.getFrom().getRow() == move.getTo().getRow()
 					|| move.getFrom().getColumn() == move.getTo().getColumn()) {
-				if(isPathEmpty(move.getFrom(), move.getTo(), board)){
-					return true;
-				}
-			} else {
-				return false;
+				return isPathEmpty(move.getFrom(), move.getTo(), board);
 			}
 		}
 		return false;

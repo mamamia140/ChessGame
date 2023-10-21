@@ -2,8 +2,12 @@ package Pieces;
 
 import Game.Board;
 import Game.Color;
+import Game.Game;
 import Game.Move;
 import Game.Square;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Bishop extends Piece {
 
@@ -14,13 +18,14 @@ public class Bishop extends Piece {
 
 	@Override
 	public boolean isValid(Move move, Board board) {
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
 			return false;
 		} else {
 			if (Math.abs(move.getFrom().getColumn() - move.getTo().getColumn()) == Math
 					.abs(move.getFrom().getRow() - move.getTo().getRow())) {
 				return isPathEmpty(move.getFrom(), move.getTo(), board);
+				
 			}
 		}
 
@@ -70,5 +75,6 @@ public class Bishop extends Piece {
 			return false;
 		}
 	}
+
 
 }

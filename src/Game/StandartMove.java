@@ -13,6 +13,7 @@ public class StandartMove extends Move{
         board.setLastTakenPiece(to.getPiece());
         to.setPiece(from.getPiece());
         from.setPiece(null);
+        
     }
 
     @Override
@@ -22,5 +23,6 @@ public class StandartMove extends Move{
 
         from.setPiece(this.getFromPiece());
         to.setPiece(board.getLastTakenPiece());
+        
     }
 }

@@ -26,7 +26,7 @@ public class Board {
 			}
 		}
 
-		importGamesFromFEN("C:\\Users\\muhammed.kilic\\Desktop\\temp.txt");
+		importGamesFromFEN("./games/test.txt");
 	}
 
 	public void printTheBoard() {
@@ -165,8 +165,10 @@ public class Board {
 		Collection<Piece> opponentPieces = getPiecesOfColor(color.getOppositeColor());
 
 		for (Piece piece : opponentPieces) {
-			if (piece.isAttacks(k.getSquare(), this)) {
-				return true;
+			if (piece.getClass() != King.class) {
+				if(piece.isAttacks(k.getSquare(), this)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -294,21 +296,26 @@ public class Board {
 		ArrayList<Move> moves;
 		int i = 0;
 		for (Piece piece : pieces) {
-			moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
-			i = 0;
-			while (i < moves.size()) {
-				moves.get(i).doMove(this);
-				if (!isChecked(players[turn].getColor())) {
-					moves.get(i++).undoMove(this);
-					break;
-				} else {
-					moves.get(i++).undoMove(this);
+			if(piece.getClass() != King.class) {
+				moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
+				i = 0;
+				while (i < moves.size()) {
+					moves.get(i).doMove(this);
+					if (!isChecked(players[turn].getColor())) {
+						moves.get(i++).undoMove(this);
+						break;
+					} else {
+						moves.get(i++).undoMove(this);
+					}
+				}
+				if (i != moves.size()) {
+					return false;
 				}
 			}
-			if (i != moves.size()) {
-				return false;
-			}
+			
 		}
 		return true;
 	}
+
+
 }

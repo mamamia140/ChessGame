@@ -14,8 +14,8 @@ public class Queen extends Piece {
 
 	@Override
 	public boolean isValid(Move move, Board board) {
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
 			return false;
 		} else {
 			if (Math.abs(move.getFrom().getColumn() - move.getTo().getColumn()) == Math

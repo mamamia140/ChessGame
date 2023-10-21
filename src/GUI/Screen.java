@@ -154,7 +154,7 @@ public class Screen {
 					}
 					else {
 						Move move = createMove(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8));
-						if(boardPanel.selectedSquare.getPiece().isValid(move, board)) {
+						if(move != null && boardPanel.selectedSquare.getPiece().isValid(move, board)) {
 							boardPanel.selectedSquare.getPiece().doMove(move,board);
 							Game.setTurn(Game.getTurn() ^ 1);
 
@@ -203,7 +203,9 @@ public class Screen {
 
 		private Move createMove(Square from, Square to){
 
-			if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class){
+			if(from == to) {
+				return null;
+			} else if(from.getPiece().getClass() == King.class && to.getPiece() != null && from.getPiece().getColor() == to.getPiece().getColor() && to.getPiece().getClass() == Rook.class){
 				return new CastlingMove(from, to);
 			} else if (false) {
 				return new EnPassantMove(from, to);

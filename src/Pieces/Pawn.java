@@ -2,6 +2,7 @@ package Pieces;
 
 import Game.Board;
 import Game.Color;
+import Game.Game;
 import Game.Move;
 import Game.Square;
 
@@ -18,8 +19,8 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isValid(Move move, Board board) {
 
-		if (move.getTo().getPiece() != null
-				&& move.getTo().getPiece().getColor() == move.getFrom().getPiece().getColor()) {
+		if (move.getDestinationPiece() != null
+				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
 			return false;
 		}
 
@@ -30,52 +31,20 @@ public class Pawn extends Piece {
 			int toRow = move.getTo().getRow();
 			if (this.getColor() == Color.BLACK) {
 				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty()) {
-					this.doMove(move,board);
-					if(!board.isChecked(this.getColor())){
-						this.undoMove(move,board);
-						return true;
-					}
-					else{
-						this.undoMove(move,board);
-						return false;
-					}
+					return true;
 				}
-				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
-						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					this.doMove(move,board);
-					if(!board.isChecked(this.getColor())){
-						this.undoMove(move,board);
-						return true;
-					}
-					else{
-						this.undoMove(move,board);
-						return false;
-					}
+				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getDestinationPiece() == null)
+						|| (Math.abs(fromColumn - toColumn) == 1 && move.getDestinationPiece() != null))) {
+					return true;
 				}
 			} else {
 				if (fromRow == 1 && toRow == 3 && fromColumn == toColumn && board.getSquare(2, fromColumn).isEmpty()) {
-					this.doMove(move,board);
-					if(!board.isChecked(this.getColor())){
-						this.undoMove(move,board);
-						return true;
-					}
-					else{
-						this.undoMove(move,board);
-						return false;
-					}
+					return true;
 				}
 
-				if ((toRow - fromRow == 1) && ((fromColumn == toColumn && move.getTo().getPiece() == null)
-						|| (Math.abs(fromColumn - toColumn) == 1 && move.getTo().getPiece() != null))) {
-					this.doMove(move,board);
-					if(!board.isChecked(this.getColor())){
-						this.undoMove(move,board);
-						return true;
-					}
-					else{
-						this.undoMove(move,board);
-						return false;
-					}
+				if ((toRow - fromRow == 1) && ((fromColumn == toColumn && move.getDestinationPiece() == null)
+						|| (Math.abs(fromColumn - toColumn) == 1 && move.getDestinationPiece() != null))) {
+					return true;
 				}
 
 			}
