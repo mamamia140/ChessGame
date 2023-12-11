@@ -21,7 +21,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public boolean isValid(Move move, Board board) {
+	public boolean isAbleToMove(Move move, Board board) {
 
 		if (move.getDestinationPiece() != null
 				&& move.getDestinationPiece().getColor() == move.getFromPiece().getColor()) {
@@ -44,7 +44,7 @@ public class Rook extends Piece {
 	@Override
 	public void undoMove(Move move, Board board) {
 		this.stack.pop();
-		move.doMove(board);
+		move.undoMove(board);
 	}
 
 	private boolean isPathEmpty(Square from, Square to, Board board) {

@@ -105,8 +105,11 @@ public class Screen {
 
 			for(int i=7; i >= 0 ; i--) {
 				for(int j=0; j<8;j++){
-					if(piece.isValid(new StandartMove(piece.getSquare(),board.getSquare(i,j)),board)){
-						boardTiles[i][j].highlight(board);
+					Move move = new StandartMove(piece.getSquare(),board.getSquare(i,j));
+					if(piece.isAbleToMove(move,board)){
+						if(piece.isLegal(move,board)){
+							boardTiles[i][j].highlight(board);
+						}
 					}
 				}
 			}
@@ -154,19 +157,19 @@ public class Screen {
 					}
 					else {
 						Move move = createMove(boardPanel.selectedSquare, board.getSquare(tileId/8, tileId%8));
-						if(move != null && boardPanel.selectedSquare.getPiece().isValid(move, board)) {
+						if(move != null && boardPanel.selectedSquare.getPiece().isAbleToMove(move, board) && boardPanel.selectedSquare.getPiece().isLegal(move,board)) {
 							boardPanel.selectedSquare.getPiece().doMove(move,board);
 							Game.setTurn(Game.getTurn() ^ 1);
 
-//							if(board.isChecked(Color.BLACK) ){
-//								System.out.println("check");
-//							}
-//							if(board.isCheckMate(game.getPlayers(), game.getTurn())){
-//								System.out.println("checkMate");
-//							}
-//							if(board.isStaleMate(game.getPlayers(),game.getTurn())){
-//								System.out.println("staleMate");
-//							}
+							if(board.isChecked(Color.BLACK) ){
+								System.out.println("check");
+							}
+							if(board.isCheckMate(game.getPlayers(), game.getTurn())){
+								System.out.println("checkMate");
+							}
+							if(board.isStaleMate(game.getPlayers(),game.getTurn()) && !board.isChecked(Color.BLACK) ){
+								System.out.println("staleMate");
+							}
 
 						}
 

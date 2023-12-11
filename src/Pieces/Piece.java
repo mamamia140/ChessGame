@@ -15,10 +15,20 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	public abstract boolean isValid(Move move, Board board);
+	public abstract boolean isAbleToMove(Move move, Board board);
 
+
+	public boolean isLegal(Move move, Board board){
+		doMove(move, board);
+		if(board.isChecked(this.getColor())){
+			undoMove(move, board);
+			return false;
+		}
+		undoMove(move, board);
+		return true;
+	}
 	public boolean isAttacks(Square square, Board board) {
-		return isValid(new StandartMove(this.getSquare(), square), board);
+		return isAbleToMove(new StandartMove(this.getSquare(), square), board);
 	}
 
 	public abstract void doMove(Move move, Board board);
@@ -32,7 +42,7 @@ public abstract class Piece {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Move tempMove = new StandartMove(this.square, squares[i][j]);
-				if (isValid(tempMove, board)) {
+				if (isAbleToMove(tempMove, board)) {
 					allPossibleMoves.add(tempMove);
 				}
 			}

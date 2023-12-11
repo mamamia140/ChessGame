@@ -20,7 +20,7 @@ public class King extends Piece {
 
 
 	@Override
-	public boolean isValid(Move move, Board board) {
+	public boolean isAbleToMove(Move move, Board board) {
 		
 		if (move.getDestinationPiece() != null
 				&& move.getDestinationPiece().getColor() == this.getColor()) {

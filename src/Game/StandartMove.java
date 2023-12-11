@@ -1,5 +1,7 @@
 package Game;
 
+import Pieces.Rook;
+
 public class StandartMove extends Move{
     public StandartMove(Square from, Square to) {
         super(from, to);
@@ -13,6 +15,7 @@ public class StandartMove extends Move{
         board.setLastTakenPiece(to.getPiece());
         to.setPiece(from.getPiece());
         from.setPiece(null);
+
         
     }
 
@@ -23,6 +26,7 @@ public class StandartMove extends Move{
 
         from.setPiece(this.getFromPiece());
         to.setPiece(board.getLastTakenPiece());
+
         
     }
 }
