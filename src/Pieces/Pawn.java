@@ -30,7 +30,7 @@ public class Pawn extends Piece {
 			int toColumn = move.getTo().getColumn();
 			int toRow = move.getTo().getRow();
 			if (this.getColor() == Color.BLACK) {
-				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty()) {
+				if (fromRow == 6 && toRow == 4 && fromColumn == toColumn && board.getSquare(5, fromColumn).isEmpty() && move.getDestinationPiece() == null) {
 					return true;
 				}
 				if ((fromRow - toRow == 1) && ((fromColumn == toColumn && move.getDestinationPiece() == null)
@@ -38,7 +38,7 @@ public class Pawn extends Piece {
 					return true;
 				}
 			} else {
-				if (fromRow == 1 && toRow == 3 && fromColumn == toColumn && board.getSquare(2, fromColumn).isEmpty()) {
+				if (fromRow == 1 && toRow == 3 && fromColumn == toColumn && board.getSquare(2, fromColumn).isEmpty() && move.getDestinationPiece() == null) {
 					return true;
 				}
 
