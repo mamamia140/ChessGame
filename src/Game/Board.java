@@ -292,6 +292,10 @@ public class Board {
 	}
 
 	public boolean isStaleMate(Player[] players, int turn) {
+		return isValidMoveLeft(players, turn) && is
+	}
+
+	private boolean isValidMoveLeft(Player[] players, int turn){
 		Collection<Piece> pieces = getPiecesOfColor(players[turn].getColor());
 		ArrayList<Move> moves;
 		int i = 0;
@@ -312,7 +316,7 @@ public class Board {
 					return false;
 				}
 			}
-			
+
 		}
 		return true;
 	}

@@ -3,7 +3,7 @@ package Game;
 public class Game {
 	private int duration;
 
-	private static Player[] players;
+	private static Player[] players = new Player[2];
 	private Board board;
 	private Move[][] moveHistory;
 	private static int turn = 0;
@@ -11,7 +11,6 @@ public class Game {
 
 	public Game(int duration) {
 		this.duration = duration;
-		players = new Player[2];
 		players[0] = new Player(Color.WHITE, duration);
 		players[1] = new Player(Color.BLACK, duration);
 		this.board = new Board();

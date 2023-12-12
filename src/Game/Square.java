@@ -3,9 +3,9 @@ package Game;
 import Pieces.*;
 
 public class Square {
-	private int row;
-	private int column;
-	private String color;
+	private final int row;
+	private final int column;
+	private final String color;
 	private Piece piece;
 
 	public Square(int row, int column, String color) {
@@ -48,11 +48,7 @@ public class Square {
 	}
 
 	public boolean isEmpty() {
-		if (this.piece == null) {
-			return true;
-		} else {
-			return false;
-		}
+        return this.piece == null;
 	}
 
 }

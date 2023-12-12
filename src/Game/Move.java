@@ -34,8 +34,8 @@ public abstract class Move {
 		return destinationPiece;
 	}
 
-	abstract public void doMove(Board board);
+	public abstract void doMove(Board board);
 
-	abstract public void undoMove(Board board);
+	public abstract void undoMove(Board board);
 }
 

@@ -1,7 +1,5 @@
 package Game;
 
-import Pieces.Rook;
-
 public class StandartMove extends Move{
     public StandartMove(Square from, Square to) {
         super(from, to);
