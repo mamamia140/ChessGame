@@ -292,7 +292,7 @@ public class Board {
 	}
 
 	public boolean isStaleMate(Player[] players, int turn) {
-		return isValidMoveLeft(players, turn) && is
+		return isValidMoveLeft(players, turn);
 	}
 
 	private boolean isValidMoveLeft(Player[] players, int turn){

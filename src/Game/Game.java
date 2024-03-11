@@ -25,7 +25,7 @@ public class Game {
 		this.duration = duration;
 	}
 
-	public Player[] getPlayers() {
+	public static Player[] getPlayers() {
 		return players;
 	}
 
