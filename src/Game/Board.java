@@ -29,6 +29,21 @@ public class Board {
 		importGamesFromFEN("./games/test.txt");
 	}
 
+	public Board(String fen) {
+		this.squares = new Square[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if ((i + j) % 2 == 0) {
+					this.squares[i][j] = new Square(i, j, "black");
+				} else {
+					this.squares[i][j] = new Square(i, j, "white");
+				}
+			}
+		}
+
+		fenToBoard(fen);
+	}
+
 	public void printTheBoard() {
 		for (int i = 0; i < this.gameRepresentation.length(); i++) {
 			int character = this.gameRepresentation.charAt(i);
@@ -53,15 +68,19 @@ public class Board {
 			Scanner dataReader = new Scanner(f1);
 			while (dataReader.hasNextLine()) {
 				String fenString = dataReader.nextLine();
-				this.gameRepresentation = fenString;
-				String[] FENFields = parseFENString(fenString);
-				parsePiecePlacementField(FENFields[0]);
-				Game.setTurn(FENFields[1].charAt(0) == 'w' ? 0 : 1);
+				fenToBoard(fenString);
 			}
 			dataReader.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private void fenToBoard(String fenString){
+		this.gameRepresentation = fenString;
+		String[] FENFields = parseFENString(fenString);
+		parsePiecePlacementField(FENFields[0]);
+		Game.setTurn(FENFields[1].charAt(0) == 'w' ? 0 : 1);
 	}
 
 	private String[] parseFENString(String fenString){

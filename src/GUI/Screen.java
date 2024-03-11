@@ -33,8 +33,6 @@ public class Screen {
 	private final BoardPanel boardPanel;
 	private final Board board;
 
-	private final Game game;
-
 	public static final java.awt.Color lightTileColor = java.awt.Color.decode("#edd4ac");
 	public static final java.awt.Color darkTileColor = java.awt.Color.decode("#ad7d59");
 
@@ -44,16 +42,15 @@ public class Screen {
 	public static String SET_NAME = "cburnett";
 	
 	public Screen(Game game) {
-		this.game = game;
 		this.gameFrame = new JFrame("MyChessGame");
 		this.gameFrame.setLayout(new BorderLayout());
 		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
 		this.board = game.getBoard();
-		this.gameFrame.setVisible(true);
 		this.boardPanel = new BoardPanel(board);
 		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 		this.gameFrame.addWindowListener(new ScreenEventHandler());
 		this.gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.gameFrame.setVisible(true);
 
 	}
 

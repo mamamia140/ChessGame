@@ -15,18 +15,15 @@ import static GUI.Screen.*;
 
 public class TilePanel extends JPanel {
     private final int tileId;
-
     TilePanel(Board board, BoardPanel boardPanel, int tileId){
         super(new GridBagLayout());
         this.tileId = tileId;
         setPreferredSize(Screen.TILE_PANEL_DIMENSION);
         assignTilePieceIcon(board);
         assignTileColor();
-
         addMouseListener(new TileMouseListener(board,boardPanel,tileId));
         validate();
     }
-
 
 
     void drawTile(Board board) {

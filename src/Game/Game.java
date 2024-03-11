@@ -9,12 +9,61 @@ public class Game {
 	private static int turn = 0;
 	private boolean isOver = false;
 
+	public static Move oldMove=null;
+	public static Move newMove=null;
+
 	public Game(int duration) {
 		this.duration = duration;
 		players[0] = new Player(Color.WHITE, duration);
 		players[1] = new Player(Color.BLACK, duration);
 		this.board = new Board();
 		this.moveHistory = new Move[2][];
+	}
+
+	private Move getTheNextMove(){
+		try {
+			while (oldMove == newMove) {
+				Thread.sleep(100);
+			}
+			oldMove = newMove;
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		return newMove;
+	}
+
+
+	public void start() {
+		Clock clock = new Clock();
+		clock.start();
+		Move input;
+		while(!isOver) {
+			input = getTheNextMove();
+			System.out.println(input);
+			//System.out.println(this.board.toString());
+			//hamleyi isle
+			//oyun sonunu kontrol et
+			//turu degistir
+			/*
+				* hamlenin geçerliliðini kontrol et
+				* if(yes){
+				*	hamleyi isle
+				*	oyun sonunu kontrol et
+				*	if(yes){
+				*		kullanýcýyý bilgilendir
+				*		isOver = true;
+				*	}
+				*
+				*	sýrayý deðiþtir
+				*   tahtayý yazdýr --> this.board.printTheBoard();
+				*}
+				* else{
+				*	kullanýcýyý uyar
+				*}
+			*/
+		}
+
+		clock.terminate();
 	}
 
 	public int getDuration() {
@@ -55,10 +104,6 @@ public class Game {
 
 	public static Player getCurrentPlayer() {
 		return players[turn];
-	}
-
-	public void start() {
-
 	}
 
 	public boolean isCheckMate() {

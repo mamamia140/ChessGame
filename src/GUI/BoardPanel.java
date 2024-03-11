@@ -14,17 +14,14 @@ import static GUI.Screen.highlightColor;
 
 public class BoardPanel extends JPanel {
     final TilePanel[][] boardTiles;
-    Square selectedSquare = null;
-
-    private Board board;
+    private Square selectedSquare = null;
 
     BoardPanel(Board board){
         super (new GridLayout(8,8));
         this.boardTiles = new TilePanel[8][8];
-        this.board = board;
         for(int i=7; i >= 0 ; i--) {
             for(int j=0; j<8;j++){
-                this.boardTiles[i][j] = new TilePanel(this.board,this, i*8+j);
+                this.boardTiles[i][j] = new TilePanel(board,this, i*8+j);
                 add(this.boardTiles[i][j]);
             }
         }
@@ -61,9 +58,6 @@ public class BoardPanel extends JPanel {
         repaint();
     }
 
-    public void changeTheTurn(){
-
-    }
 
     public void borderHighlight(int tileId){
         boardTiles[tileId/8][tileId%8].setBorder(BorderFactory.createLineBorder(Screen.highlightColor));
@@ -73,4 +67,11 @@ public class BoardPanel extends JPanel {
         boardTiles[selectedSquare.getRow()][selectedSquare.getColumn()].setBorder(null);
     }
 
+    public Square getSelectedSquare() {
+        return selectedSquare;
+    }
+
+    public void setSelectedSquare(Square selectedSquare) {
+        this.selectedSquare = selectedSquare;
+    }
 }

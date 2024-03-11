@@ -23,7 +23,7 @@ public class TileMouseListener implements MouseListener {
 	}
 
 	private boolean isFirstSelection(){
-        return boardPanel.selectedSquare == null;
+        return boardPanel.getSelectedSquare() == null;
     }
 
     private boolean isEmptySquareSelected(){
@@ -35,11 +35,23 @@ public class TileMouseListener implements MouseListener {
     }
 
     private void setSelectedSquare(){
-        boardPanel.selectedSquare = board.getSquare(tileId/8, tileId%8);
+        boardPanel.setSelectedSquare(board.getSquare(tileId/8, tileId%8));
     }
 
+	private Square getSelectedSquare(){
+		return boardPanel.getSelectedSquare();
+	}
+
+	private Square getThisTilesSquare(){
+		return board.getSquare(tileId / 8, tileId % 8));
+	}
+
+	private boolean isValidMove(Move move){
+		return move != null && getSelectedSquare().getPiece().isAbleToMove(move, board) && getSelectedSquare().getPiece().isLegal(move, board);
+	}
+
     private void highlightTheBoard(int tileId){
-        boardPanel.highlightTheBoard(boardPanel.selectedSquare.getPiece(), this.board);
+        boardPanel.highlightTheBoard(boardPanel.getSelectedSquare().getPiece(), this.board);
 		boardPanel.borderHighlight(this.tileId);
     }
 
@@ -59,12 +71,16 @@ public class TileMouseListener implements MouseListener {
 
 	}
 
+	private void changeTurn(){
+		Game.setTurn(Game.getTurn() ^ 1);
+	}
+
     
 
     @Override
 	public void mouseClicked(MouseEvent e) {
 		if (isFirstSelection()) {
-			if (!isEmptySquareSelected()) {
+			if (isEmptySquareSelected()) {
 				if (isOwnPieceSelected()) {
 					setSelectedSquare();
 					highlightTheBoard(this.tileId);
@@ -72,25 +88,16 @@ public class TileMouseListener implements MouseListener {
 			}
 
 		} else {
-			Move move = createMove(boardPanel.selectedSquare, board.getSquare(tileId / 8, tileId % 8));
-			if (move != null && boardPanel.selectedSquare.getPiece().isAbleToMove(move, board) && boardPanel.selectedSquare.getPiece().isLegal(move, board)) {
-				boardPanel.selectedSquare.getPiece().doMove(move, board);
-				Game.setTurn(Game.getTurn() ^ 1);
-				if (board.isChecked(Color.BLACK)) {
-					System.out.println("check");
-				}
-				if (board.isCheckMate(Game.getPlayers(), Game.getTurn())) {
-					System.out.println("checkMate");
-				}
-				if (board.isStaleMate(Game.getPlayers(), Game.getTurn()) && !board.isChecked(Color.BLACK)) {
-					System.out.println("staleMate");
-
-
-					boardPanel.drawBoard(board);
-					boardPanel.borderUnhighlight();
-					boardPanel.selectedSquare = null;
-				}
+			Move move = createMove(getSelectedSquare(), getThisTilesSquare());
+			if (isValidMove(move)) {
+				Game.newMove = move;
+				getSelectedSquare().getPiece().doMove(move, board);
+				changeTurn();
 			}
+			boardPanel.drawBoard(board);
+			boardPanel.borderUnhighlight();
+			boardPanel.setSelectedSquare(null);
+
 		}
 	}
 	
