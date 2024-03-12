@@ -11,10 +11,6 @@ public abstract class Piece {
 	private boolean isTaken = false;
 	private Square square;
 
-	public Piece(Color color) {
-		this.color = color;
-	}
-
 	public abstract boolean isAbleToMove(Move move, Board board);
 
 
@@ -49,6 +45,11 @@ public abstract class Piece {
 		}
 		return allPossibleMoves;
 	}
+
+	Piece(Color color) {
+		this.color = color;
+	}
+
 
 	public int getPoints() {
 		return points;

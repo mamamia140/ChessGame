@@ -43,6 +43,15 @@ public class Game {
 		return move != null && getSelectedSquare().getPiece().isAbleToMove(move, board) && getSelectedSquare().getPiece().isLegal(move, board);
 	}
 
+	private void undoSelection(){
+		boardPanel.drawBoard(board);
+		boardPanel.borderUnhighlight();
+		boardPanel.setSelectedSquare(null);
+	}
+	private boolean isEndOfTheGame(){
+		return (board.isCheckMate(players,turn) || board.isStaleMate(players,turn));
+	}
+
 	private void changeTurn(){
 		Game.setTurn(Game.getTurn() ^ 1);
 	}
@@ -52,22 +61,22 @@ public class Game {
 		Move move;
 		while(!isOver) {
 			move = getTheNextMove();
-			System.out.println(move);
 			if(isValidMove(move)){
 				getSelectedSquare().getPiece().doMove(move, board);
 				changeTurn();
 
 			}
-			boardPanel.drawBoard(board);
-			boardPanel.borderUnhighlight();
-			boardPanel.setSelectedSquare(null);
-			// if(isEndOfTheGame()){
-			// }
+			undoSelection();
+			if(isEndOfTheGame()){
+				System.out.println("game over");
+				System.exit(0);
+			}
 
 		}
 
 		clock.terminate();
 	}
+
 
 	public int getDuration() {
 		return duration;
