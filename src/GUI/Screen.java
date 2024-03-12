@@ -41,17 +41,19 @@ public class Screen {
 	
 	public static String SET_NAME = "cburnett";
 	
-	public Screen(Game game) {
+	public Screen() {
+		Game game = new Game(300);
 		this.gameFrame = new JFrame("MyChessGame");
 		this.gameFrame.setLayout(new BorderLayout());
 		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
 		this.board = game.getBoard();
 		this.boardPanel = new BoardPanel(board);
+		game.setBoardPanel(boardPanel);
 		this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 		this.gameFrame.addWindowListener(new ScreenEventHandler());
 		this.gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.gameFrame.setVisible(true);
-
+		game.start();
 	}
 
 	private class ScreenEventHandler extends WindowAdapter{

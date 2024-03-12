@@ -38,22 +38,22 @@ public class TileMouseListener implements MouseListener {
         boardPanel.setSelectedSquare(board.getSquare(tileId/8, tileId%8));
     }
 
-	private Square getSelectedSquare(){
-		return boardPanel.getSelectedSquare();
-	}
+
 
 	private Square getThisTilesSquare(){
-		return board.getSquare(tileId / 8, tileId % 8));
+		return board.getSquare(tileId / 8, tileId % 8);
 	}
 
-	private boolean isValidMove(Move move){
-		return move != null && getSelectedSquare().getPiece().isAbleToMove(move, board) && getSelectedSquare().getPiece().isLegal(move, board);
-	}
+
 
     private void highlightTheBoard(int tileId){
         boardPanel.highlightTheBoard(boardPanel.getSelectedSquare().getPiece(), this.board);
 		boardPanel.borderHighlight(this.tileId);
     }
+
+	private Square getSelectedSquare(){
+		return boardPanel.getSelectedSquare();
+	}
 
 	private Move createMove(Square from, Square to){
 
@@ -71,9 +71,7 @@ public class TileMouseListener implements MouseListener {
 
 	}
 
-	private void changeTurn(){
-		Game.setTurn(Game.getTurn() ^ 1);
-	}
+
 
     
 
@@ -89,15 +87,7 @@ public class TileMouseListener implements MouseListener {
 
 		} else {
 			Move move = createMove(getSelectedSquare(), getThisTilesSquare());
-			if (isValidMove(move)) {
-				Game.newMove = move;
-				getSelectedSquare().getPiece().doMove(move, board);
-				changeTurn();
-			}
-			boardPanel.drawBoard(board);
-			boardPanel.borderUnhighlight();
-			boardPanel.setSelectedSquare(null);
-
+			Game.newMove = move;
 		}
 	}
 	

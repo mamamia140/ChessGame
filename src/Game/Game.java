@@ -1,10 +1,14 @@
 package Game;
 
+import GUI.BoardPanel;
+
 public class Game {
 	private int duration;
 
 	private static Player[] players = new Player[2];
 	private Board board;
+
+	private BoardPanel boardPanel;
 	private Move[][] moveHistory;
 	private static int turn = 0;
 	private boolean isOver = false;
@@ -32,35 +36,34 @@ public class Game {
 		return newMove;
 	}
 
+	private Square getSelectedSquare(){
+		return boardPanel.getSelectedSquare();
+	}
+	private boolean isValidMove(Move move){
+		return move != null && getSelectedSquare().getPiece().isAbleToMove(move, board) && getSelectedSquare().getPiece().isLegal(move, board);
+	}
 
+	private void changeTurn(){
+		Game.setTurn(Game.getTurn() ^ 1);
+	}
 	public void start() {
 		Clock clock = new Clock();
 		clock.start();
-		Move input;
+		Move move;
 		while(!isOver) {
-			input = getTheNextMove();
-			System.out.println(input);
-			//System.out.println(this.board.toString());
-			//hamleyi isle
-			//oyun sonunu kontrol et
-			//turu degistir
-			/*
-				* hamlenin geçerliliðini kontrol et
-				* if(yes){
-				*	hamleyi isle
-				*	oyun sonunu kontrol et
-				*	if(yes){
-				*		kullanýcýyý bilgilendir
-				*		isOver = true;
-				*	}
-				*
-				*	sýrayý deðiþtir
-				*   tahtayý yazdýr --> this.board.printTheBoard();
-				*}
-				* else{
-				*	kullanýcýyý uyar
-				*}
-			*/
+			move = getTheNextMove();
+			System.out.println(move);
+			if(isValidMove(move)){
+				getSelectedSquare().getPiece().doMove(move, board);
+				changeTurn();
+
+			}
+			boardPanel.drawBoard(board);
+			boardPanel.borderUnhighlight();
+			boardPanel.setSelectedSquare(null);
+			// if(isEndOfTheGame()){
+			// }
+
 		}
 
 		clock.terminate();
@@ -112,5 +115,13 @@ public class Game {
 
 	public boolean isStaleMate() {
 		return board.isStaleMate(players, turn);
+	}
+
+	public BoardPanel getBoardPanel() {
+		return boardPanel;
+	}
+
+	public void setBoardPanel(BoardPanel boardPanel) {
+		this.boardPanel = boardPanel;
 	}
 }
