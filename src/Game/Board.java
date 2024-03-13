@@ -26,7 +26,7 @@ public class Board {
 			}
 		}
 
-		importGamesFromFEN("./games/test.txt");
+		importGamesFromFEN("./games/initial.txt");
 	}
 
 	public Board(String fen) {
@@ -291,10 +291,8 @@ public class Board {
 		Collection<Piece> pieces = new ArrayList<Piece>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if(squares[i][j].getPiece() != null){
-					if (squares[i][j].getPiece().getColor() == color) {
+				if(squares[i][j].getPiece() != null && (squares[i][j].getPiece().getColor() == color)) {
 						pieces.add(squares[i][j].getPiece());
-					}
 				}
 
 			}
@@ -305,40 +303,31 @@ public class Board {
 
 	public boolean isCheckMate(Player[] players,int turn ) {
 		if (isChecked(players[turn].getColor())) {
-			return isStaleMate(players, turn);
+			return !isValidMoveLeft(players, turn);
 		}
 		return false;
 	}
-
 	public boolean isStaleMate(Player[] players, int turn) {
-		return isValidMoveLeft(players, turn);
+		return !isChecked(players[turn].getColor()) && !isValidMoveLeft(players, turn);
 	}
 
 	private boolean isValidMoveLeft(Player[] players, int turn){
 		Collection<Piece> pieces = getPiecesOfColor(players[turn].getColor());
 		ArrayList<Move> moves;
-		int i = 0;
 		for (Piece piece : pieces) {
-			if(piece.getClass() != King.class) {
-				moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
-				i = 0;
-				while (i < moves.size()) {
-					moves.get(i).doMove(this);
-					if (!isChecked(players[turn].getColor())) {
-						moves.get(i++).undoMove(this);
-						break;
-					} else {
-						moves.get(i++).undoMove(this);
-					}
-				}
-				if (i != moves.size()) {
-					return false;
-				}
+			moves = (ArrayList<Move>) piece.getAllPossibleMoves(this);
+			if(!moves.isEmpty()){
+				return true;
 			}
-
 		}
-		return true;
+		return false;
 	}
 
 
+	public boolean areKingsHuggingEachOther() {
+		Piece whiteKing = getKingOfColor(Color.WHITE);
+		Piece blackKing = getKingOfColor(Color.BLACK);
+
+        return Math.abs(whiteKing.getSquare().getColumn() - blackKing.getSquare().getColumn()) <= 1 && Math.abs(whiteKing.getSquare().getRow() - blackKing.getSquare().getRow()) <= 1;
+	}
 }

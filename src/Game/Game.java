@@ -1,8 +1,11 @@
 package Game;
 
 import GUI.BoardPanel;
+import GUI.Screen;
 
 public class Game {
+
+	private final Screen screen;
 	private int duration;
 
 	private static Player[] players = new Player[2];
@@ -11,7 +14,7 @@ public class Game {
 	private BoardPanel boardPanel;
 	private Move[][] moveHistory;
 	private static int turn = 0;
-	private boolean isOver = false;
+	public static boolean isOver = false;
 
 	public static Move oldMove=null;
 	public static Move newMove=null;
@@ -22,6 +25,7 @@ public class Game {
 		players[1] = new Player(Color.BLACK, duration);
 		this.board = new Board();
 		this.moveHistory = new Move[2][];
+		this.screen = new Screen(this);
 	}
 
 	private Move getTheNextMove(){
@@ -49,15 +53,24 @@ public class Game {
 		boardPanel.setSelectedSquare(null);
 	}
 	private boolean isEndOfTheGame(){
-		return (board.isCheckMate(players,turn) || board.isStaleMate(players,turn));
+		if(board.isCheckMate(players,turn)){
+			System.out.println("checkmate");
+			return true;
+		}
+		if(board.isStaleMate(players,turn)){
+			System.out.println("stalemate");
+			return true;
+		}
+		return false;
+		//return (board.isCheckMate(players,turn) || board.isStaleMate(players,turn));
 	}
 
 	private void changeTurn(){
 		Game.setTurn(Game.getTurn() ^ 1);
 	}
 	public void start() {
-		Clock clock = new Clock();
-		clock.start();
+//		Clock clock = new Clock();
+//		clock.start();
 		Move move;
 		while(!isOver) {
 			move = getTheNextMove();
@@ -73,8 +86,7 @@ public class Game {
 			}
 
 		}
-
-		clock.terminate();
+//		clock.terminate();
 	}
 
 
@@ -133,4 +145,5 @@ public class Game {
 	public void setBoardPanel(BoardPanel boardPanel) {
 		this.boardPanel = boardPanel;
 	}
+
 }

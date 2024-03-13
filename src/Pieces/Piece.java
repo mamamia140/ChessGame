@@ -20,6 +20,11 @@ public abstract class Piece {
 			undoMove(move, board);
 			return false;
 		}
+		if(board.areKingsHuggingEachOther()){
+			undoMove(move,board);
+			return false;
+		}
+
 		undoMove(move, board);
 		return true;
 	}
@@ -38,7 +43,7 @@ public abstract class Piece {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Move tempMove = new StandartMove(this.square, squares[i][j]);
-				if (isAbleToMove(tempMove, board)) {
+				if (isAbleToMove(tempMove, board) && isLegal(tempMove,board)) {
 					allPossibleMoves.add(tempMove);
 				}
 			}

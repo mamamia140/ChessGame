@@ -7,7 +7,8 @@ import GUI.Screen;
 public class main {
 
 	public static void main(String[] args) {
-		Screen screen = new Screen();
+
+		Game game = new Game(300);
 	}
 
 }

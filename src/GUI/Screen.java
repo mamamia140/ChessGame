@@ -41,8 +41,7 @@ public class Screen {
 	
 	public static String SET_NAME = "cburnett";
 	
-	public Screen() {
-		Game game = new Game(300);
+	public Screen(Game game) {
 		this.gameFrame = new JFrame("MyChessGame");
 		this.gameFrame.setLayout(new BorderLayout());
 		this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
@@ -56,9 +55,10 @@ public class Screen {
 		game.start();
 	}
 
+
 	private class ScreenEventHandler extends WindowAdapter{
 
-		private Clock clock;
+		//private Clock clock;
 		public ScreenEventHandler(){
 			//this.clock = new Clock();
 			//clock.start();
@@ -66,6 +66,8 @@ public class Screen {
 
 		public void windowClosing(WindowEvent event){
 			//this.clock.terminate();
+			System.out.println("close");
+			Game.isOver = true;
 		}
 	}
 
